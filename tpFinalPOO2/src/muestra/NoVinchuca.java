@@ -1,4 +1,4 @@
-package tpFinalPOO2;
+package muestra;
 
 
 public enum NoVinchuca implements Opinion{
