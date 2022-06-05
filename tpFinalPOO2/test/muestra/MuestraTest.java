@@ -24,7 +24,7 @@ public class MuestraTest {
 	UbicacionI ubicacion2;
 	UsuarioI usuarioBasicoJuan;
 	UsuarioI usuarioBasicoPepe;
-	UsuarioI usuarioExpertoLeonel;
+	UsuarioI usuarioBasicoLeonel;
 	UsuarioI usuarioExpertoMaria;
 	UsuarioI usuarioEspecialistaMarta;
 	Calendar fechaHoy;
@@ -37,7 +37,7 @@ public class MuestraTest {
 		fecha35Dias.add(Calendar.DAY_OF_MONTH, -35);
 		usuarioBasicoJuan= mock(UsuarioI.class);
 		usuarioBasicoPepe= mock(UsuarioI.class);
-		usuarioExpertoLeonel= mock(UsuarioI.class);
+		usuarioBasicoLeonel= mock(UsuarioI.class);
 		usuarioExpertoMaria= mock(UsuarioI.class);
 		usuarioEspecialistaMarta= mock(UsuarioI.class);
 		ubicacion1= mock(UbicacionI.class);
@@ -63,7 +63,7 @@ public class MuestraTest {
 	public void testResultadoActualDeUnaMuestraDondeHayUnEmpateDeOpinionesResultaEnNoDefinido() {
 		//TODO No encuentro forma de hacerlo
 		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
-		assertEquals("No Definido", muestraVinchuca.resultadoActual());
+		assertEquals("Estado actual: No Definido", muestraVinchuca.resultadoActual());
 	}
 	
 	@Test
@@ -78,7 +78,7 @@ public class MuestraTest {
 		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
 		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
 		
-		assertEquals("No Definido", muestraVinchuca.resultadoActual());
+		assertEquals("Estado actual: No Definido", muestraVinchuca.resultadoActual());
 	}
 	
 	@Test
@@ -89,14 +89,16 @@ public class MuestraTest {
 	}
 	
 	@Test
-	public void testCuandoOpinaUnUsuarioExpertoOtroSoloCuentanVotosDeUsuariosExpertosParaElResultado() {
+	public void testCuandoOpinaUnUsuarioExpertoSoloCuentanVotosDeUsuariosExpertosParaElResultado() {
 		
 	}
 	
 	@Test
 	public void testCuandoOpinaUnUsuarioExpertoOtrosUsuariosExpertosPuedenVotar() {
-		
-		
+		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, Vinchuca.Infestans);
+		muestraVinchuca.registrarOpinionNormal(usuarioBasicoLeonel, Vinchuca.Infestans);
+		muestraVinchuca.registrarOpinionExperta(usuarioExpertoMaria, Vinchuca.Gusayana);
+		assertEquals("Solo pueden opinar expertos, estado actual: " +Vinchuca.Gusayana,muestraVinchuca.resultadoActual());
 	}
 
 	
