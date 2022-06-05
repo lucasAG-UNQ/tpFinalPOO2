@@ -99,5 +99,9 @@ public class Muestra {
 		return res;
 	}
 
+	public void reiniciarOpiniones() {
+		this.opiniones.clear();
+	}
+
 
 }
