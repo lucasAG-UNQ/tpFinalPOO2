@@ -61,18 +61,44 @@ public class MuestraTest {
 	
 	@Test
 	public void testResultadoActualDeUnaMuestraDondeHayUnEmpateDeOpinionesResultaEnNoDefinido() {
+		//TODO No encuentro forma de hacerlo
 		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
 		assertEquals("No Definido", muestraVinchuca.resultadoActual());
 	}
 	
 	@Test
 	public void testElUsuarioQueEnviaLaMuestraNoPuedeOpinar(){
+		//TODO
 		
 	}
 	
 	@Test
 	public void testUnUsuarioQueOpinaNoPuedeVolverAOpinar() {
+		//TODO
+		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
+		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
+		
+		assertEquals("No Definido", muestraVinchuca.resultadoActual());
+	}
+	
+	@Test
+	public void testCuandoOpinaUnUsuarioExpertoUnUsuarioBasicoYaNoPuedeOpinar() {
+		muestraVinchuca.registrarOpinionExperta(usuarioExpertoMaria, Vinchuca.Gusayana);
+		String resultado= muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
+		assertEquals("No puede opinar ya que un experto opino",resultado);
+	}
+	
+	@Test
+	public void testCuandoOpinaUnUsuarioExpertoOtroSoloCuentanVotosDeUsuariosExpertosParaElResultado() {
 		
 	}
 	
+	@Test
+	public void testCuandoOpinaUnUsuarioExpertoOtrosUsuariosExpertosPuedenVotar() {
+		
+		
+	}
+
+	
+
 }

@@ -2,8 +2,8 @@ package muestra;
 
 public abstract class EstadoMuestra {
 
-	protected abstract void registrarOpinionNormal(UsuarioI usuario,Muestra muestra);
-	protected abstract void registrarOpinionExperta(UsuarioI usuario,Muestra muestra);
-	protected abstract void resultadoActual();
+	protected abstract String registrarOpinionNormal(UsuarioI usuario, Opinion opinion, Muestra muestra);
+	protected abstract String registrarOpinionExperta(UsuarioI usuario, Opinion opinion, Muestra muestra);
+	protected abstract String resultadoActual(Muestra muestra);
 	
 }

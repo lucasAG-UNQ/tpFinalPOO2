@@ -50,20 +50,53 @@ public class Muestra {
 		return fechaEnvio;
 	}
 
+	
+	/**
+	 * 
+	 * Devuelve la opinion mas comun en las opiniones registradas
+	 * @return
+	 */
+	
+	
 	public String resultadoActual() {
-		return this.opiniones.values().stream()//los valores del mapa repetidos
-					.collect(Collectors.groupingBy(e->e, Collectors.counting())) //nuevo mapa con opinion,cantidadDeEsta
-					.entrySet()	
-					.stream()
-					.max(Comparator.comparing(Entry::getValue))
-					.get()
-					.getKey()
-					.toString();
+		return this.estadoMuestra.resultadoActual(this);
 	}
 
-	public void registrarOpinionNormal(UsuarioI usuarioBasicoPepe, Opinion chinchefoliada) {
-		// TODO Auto-generated method stub
-		
+	public String registrarOpinionNormal(UsuarioI usuarioBasicoPepe, Opinion opinion) {
+		return this.estadoMuestra.registrarOpinionNormal(usuarioBasicoPepe, opinion, this);
+	}
+
+	public String registrarOpinionExperta(UsuarioI usuario, Opinion opinion) {
+		return this.estadoMuestra.registrarOpinionExperta(usuario, opinion, this);
+	}
+
+	public String vistoBuenoRegistroBasico(UsuarioI usuario, Opinion opinion) {
+		this.opiniones.put(usuario, opinion);
+		return "Opinion registrada correctamente";
+	}
+
+	public String vistoBuenoRegistroExperto(UsuarioI usuario, Opinion opinion) {
+		this.opiniones.put(usuario, opinion);
+		if (this.opiniones.containsValue(opinion)){
+			this.setEstadoMuestra(new NadieOpina());
+		}
+		return null;
+	}
+
+	public void setEstadoMuestra(EstadoMuestra estado) {
+		this.estadoMuestra= estado;
+	}
+
+	public String resultado() {
+		String res=  this.opiniones.values().stream()//los valores del mapa repetidos
+							.collect(Collectors.groupingBy(e->e, Collectors.counting())) //nuevo mapa con opinion,cantidadDeEsta
+							.entrySet()	
+							.stream()
+							.max(Comparator.comparing(Entry::getValue))
+							.get()
+							.getKey()
+							.toString();
+		return res;
 	}
 
 
