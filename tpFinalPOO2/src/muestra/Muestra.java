@@ -76,11 +76,15 @@ public class Muestra {
 	}
 
 	public String vistoBuenoRegistroExperto(UsuarioI usuario, Opinion opinion) {
-		this.opiniones.put(usuario, opinion);
+		
 		if (this.opiniones.containsValue(opinion)){
+			this.opiniones.put(usuario, opinion);
 			this.setEstadoMuestra(new NadieOpina());
+		}else {
+			this.opiniones.put(usuario, opinion);
 		}
-		return null;
+
+		return "Opinion registrada correctamente";
 	}
 
 	public void setEstadoMuestra(EstadoMuestra estado) {

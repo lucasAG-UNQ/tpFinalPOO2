@@ -56,7 +56,7 @@ public class MuestraTest {
 	
 	@Test
 	public void testResultadoActualDeUnaMuestraRecienEnviadaEsLaEspecieDeLaMuestraEnviada() {
-		assertEquals("Infestans", muestraVinchuca.resultadoActual());
+		assertEquals("Estado actual: Infestans", muestraVinchuca.resultadoActual());
 	}
 	
 	@Test
@@ -83,8 +83,8 @@ public class MuestraTest {
 	
 	@Test
 	public void testCuandoOpinaUnUsuarioExpertoUnUsuarioBasicoYaNoPuedeOpinar() {
-		muestraVinchuca.registrarOpinionExperta(usuarioExpertoMaria, Vinchuca.Gusayana);
-		String resultado= muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
+		muestraNoVinchuca.registrarOpinionExperta(usuarioExpertoMaria, Vinchuca.Gusayana);
+		String resultado= muestraNoVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
 		assertEquals("No puede opinar ya que un experto opino",resultado);
 	}
 	
