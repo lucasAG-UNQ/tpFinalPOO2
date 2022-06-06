@@ -1,4 +1,4 @@
-package muestra;
+package opinion;
 
 
 public enum NoVinchuca implements Opinion{

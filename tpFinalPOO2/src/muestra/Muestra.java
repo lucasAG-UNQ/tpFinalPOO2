@@ -7,7 +7,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public class Muestra {
+import opinion.Opinion;
+import opinion.Vinchuca;
+import usuario.UsuarioI;
+
+public class Muestra implements MuestraI{
 
 	private Vinchuca especieFotografiada;
 	private UbicacionI ubicacion;
@@ -69,6 +73,8 @@ public class Muestra {
 	public String registrarOpinionExperta(UsuarioI usuario, Opinion opinion) {
 		return this.estadoMuestra.registrarOpinionExperta(usuario, opinion, this);
 	}
+	
+	
 
 	public String vistoBuenoRegistroBasico(UsuarioI usuario, Opinion opinion) {
 		this.opiniones.put(usuario, opinion);

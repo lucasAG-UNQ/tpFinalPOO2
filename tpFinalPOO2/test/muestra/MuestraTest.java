@@ -10,10 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import muestra.Muestra;
-import muestra.NoVinchuca;
 import muestra.UbicacionI;
-import muestra.UsuarioI;
-import muestra.Vinchuca;
+import opinion.NoVinchuca;
+import opinion.Vinchuca;
+import usuario.UsuarioI;
 
 
 public class MuestraTest {

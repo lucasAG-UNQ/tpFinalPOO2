@@ -1,5 +1,8 @@
 package muestra;
 
+import opinion.Opinion;
+import usuario.UsuarioI;
+
 public class SoloExpertoOpina extends EstadoMuestra{
 
 	@Override

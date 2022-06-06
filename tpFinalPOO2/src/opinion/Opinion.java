@@ -1,4 +1,4 @@
-package muestra;
+package opinion;
 
 public interface Opinion {
 

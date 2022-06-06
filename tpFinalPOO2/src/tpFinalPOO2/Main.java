@@ -4,9 +4,9 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import muestra.NoVinchuca;
-import muestra.Opinion;
-import muestra.Vinchuca;
+import opinion.NoVinchuca;
+import opinion.Opinion;
+import opinion.Vinchuca;
 
 public class Main {
 
