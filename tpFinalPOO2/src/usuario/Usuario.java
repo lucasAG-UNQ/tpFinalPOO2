@@ -5,6 +5,7 @@ import java.util.HashMap;
 import muestra.Muestra;
 import muestra.MuestraI;
 import opinion.Opinion;
+import sistemaWeb.SistemaWeb;
 import sistemaWeb.SistemaWebUsuarioI;
 
 public class Usuario implements UsuarioI{
@@ -15,15 +16,21 @@ public class Usuario implements UsuarioI{
 	
 	
 	public Usuario() {
-		this.sistemaWeb= SistemaWebUsuarioI.getInstance();
+		this.sistemaWeb= SistemaWeb.getInstance();
 		this.categoriaUsuario= new Basico();
 		this.historialOpinion= new HashMap <Muestra,Opinion> ();
 	}
 	
 	public Usuario(CertificadoExternoI certificado) {
-		
+		this();
+		this.setCategoriaUsuario(new Especialista());
 	}
 
+
+	private void setCategoriaUsuario(CategoriaUsuario categoria) {
+		this.categoriaUsuario= categoria;
+		
+	}
 
 	@Override
 	public String opinar(MuestraI muestra) {
@@ -35,6 +42,14 @@ public class Usuario implements UsuarioI{
 	public String enviarMuestra(MuestraI muestra) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public CategoriaUsuario getCategoriaUsuario() {
+		return this.categoriaUsuario;
+	}
+
+	public void presentarCertificado(CertificadoExternoI certificado) {
+		this.setCategoriaUsuario(new Especialista());
 	}
 
 }
