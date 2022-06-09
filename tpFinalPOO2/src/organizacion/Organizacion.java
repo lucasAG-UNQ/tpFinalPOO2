@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import muestra.Muestra;
 import muestra.UbicacionI;
 
-public class Organizacion implements IOrganizacion, Observer{
+public class Organizacion implements IOrganizacion, IZonaListener{
 	
 	private UbicacionI ubicacion;
 	private TipoDeOrganizacion tipo;
@@ -26,17 +27,37 @@ public class Organizacion implements IOrganizacion, Observer{
 		this.pluginRegistro = pluginRegistro;
 		this.pluginValidacion = pluginValidacion;
 		this.zonasDeInteres = zonasDeInteres;
+		this.suscribirZonas();
+		
 	}
 
 
-
-
+	private void suscribirZonas() {
+		for(ZonaDeCobertura zona : zonasDeInteres) {
+			zona.addListener(this);
+		}
+	}
+	
+	private void agregarZonaDeInteres(ZonaDeCobertura zona) {
+		zonasDeInteres.add(zona);
+		zona.addListener(this);
+	}
+	
+	private void quitarZonaDeInteres(ZonaDeCobertura zona) {
+		zonasDeInteres.remove(zona);
+		zona.deleteListener(this);;
+	}
 
 
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+	public void muestraRegistrada(Muestra muestra, ZonaDeCobertura zona) {
+		this.pluginRegistro.nuevoEvento(this, zona , muestra);
+	}
+
+
+	@Override
+	public void muestraValidada(Muestra muestra, ZonaDeCobertura zona) {
+		this.pluginValidacion.nuevoEvento(this, zona, muestra);
 	}
 	
 	
