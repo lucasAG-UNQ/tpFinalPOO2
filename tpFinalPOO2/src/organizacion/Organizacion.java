@@ -45,7 +45,7 @@ public class Organizacion implements IOrganizacion, IZonaListener{
 	
 	private void quitarZonaDeInteres(ZonaDeCobertura zona) {
 		zonasDeInteres.remove(zona);
-		zona.deleteListener(this);;
+		zona.removeListener(this);;
 	}
 
 
