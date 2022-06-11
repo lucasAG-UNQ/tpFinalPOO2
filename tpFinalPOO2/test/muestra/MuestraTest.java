@@ -10,9 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import muestra.Muestra;
-import muestra.UbicacionI;
 import opinion.NoVinchuca;
 import opinion.Vinchuca;
+import ubicacion.UbicacionI;
 import usuario.UsuarioI;
 
 

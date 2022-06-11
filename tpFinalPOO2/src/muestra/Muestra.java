@@ -3,12 +3,15 @@ package muestra;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import opinion.Opinion;
 import opinion.Vinchuca;
+import ubicacion.UbicacionI;
 import usuario.UsuarioI;
 
 public class Muestra implements MuestraI{
@@ -73,8 +76,6 @@ public class Muestra implements MuestraI{
 	public String registrarOpinionExperta(UsuarioI usuario, Opinion opinion) {
 		return this.estadoMuestra.registrarOpinionExperta(usuario, opinion, this);
 	}
-	
-	
 
 	public String vistoBuenoRegistroBasico(UsuarioI usuario, Opinion opinion) {
 		this.opiniones.put(usuario, opinion);
@@ -97,15 +98,26 @@ public class Muestra implements MuestraI{
 		this.estadoMuestra= estado;
 	}
 
+	/**
+	 * Devuelve el resultado actual de la muestra, o sea la opinion que mas se
+	 * envio, en caso de empate retorna "No Definido"
+	 * @return
+	 */
 	public String resultado() {
-		String res=  this.opiniones.values().stream()//los valores del mapa repetidos
+		Set<Entry<Opinion, Long>> maxValues=  this.opiniones.values().stream()//los valores del mapa repetidos
 							.collect(Collectors.groupingBy(e->e, Collectors.counting())) //nuevo mapa con opinion,cantidadDeEsta
-							.entrySet()	
-							.stream()
-							.max(Comparator.comparing(Entry::getValue))
-							.get()
-							.getKey()
-							.toString();
+							.entrySet(); //mapa en set de entry(k,v)
+		
+		Entry<Opinion, Long> max= maxValues.stream().max(Map.Entry.comparingByValue()).get(); //entrada que mas se repite	
+		maxValues.stream().filter(e->e.getValue()== max.getValue()); //entradas filtradas con el valor que mas se repite
+		String res="";
+		
+		if (maxValues.size()==1) { 	//Si hay 1 unico valor significa que hay un unico valor maximo
+			res= max.getKey().toString();
+		} else {
+			res= "No Definido";
+		}
+		
 		return res;
 	}
 

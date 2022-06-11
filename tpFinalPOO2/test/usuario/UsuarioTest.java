@@ -6,6 +6,8 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import muestra.MuestraI;
+
 public class UsuarioTest {
 
 	Usuario usuarioBasicoJuan;
@@ -14,6 +16,7 @@ public class UsuarioTest {
 	Usuario usuarioExpertoMaria;
 	Usuario usuarioEspecialistaMarta;
 	CertificadoExternoI certificado;
+	MuestraI muestra1;
 	
 	@BeforeEach
 	public void setUp() {
@@ -54,6 +57,7 @@ public class UsuarioTest {
 	@Test
 	public void testUnUsuarioBasicoQueEnvia10MuestrasYOpina20VecesEn30DiasEsExperto() {
 		//TODO
+		//Podria testearse desde los test de funcionalidad general o desde los test del sistema web
 	}
 	
 }

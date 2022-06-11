@@ -1,4 +1,4 @@
-package ubicacion;
+package muestra;
 
 public interface UbicacionI {
 
