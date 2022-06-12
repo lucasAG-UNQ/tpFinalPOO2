@@ -20,4 +20,9 @@ public class NadieOpina extends EstadoMuestra {
 		return "Verificada: " + muestra.resultado(muestra.filtrarOpinionesExpertas());
 	}
 
+	@Override
+	protected Boolean estaVerificada() {
+		return true;
+	}
+
 }

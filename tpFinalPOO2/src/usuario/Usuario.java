@@ -35,6 +35,7 @@ public class Usuario implements UsuarioI{
 	@Override
 	public String opinar(MuestraI muestra,Opinion opinion) {
 		// TODO Auto-generated method stub
+		//Se tiene que delegar al estado usuario para que transforme la opinion en opinion experta
 		return null;
 	}
 
@@ -50,6 +51,10 @@ public class Usuario implements UsuarioI{
 
 	public void presentarCertificado(CertificadoExternoI certificado) {
 		this.setCategoriaUsuario(new Especialista());
+	}
+
+	public void setSistema(SistemaWebUsuarioI sistema) {
+		this.sistemaWeb=sistema;
 	}
 
 }

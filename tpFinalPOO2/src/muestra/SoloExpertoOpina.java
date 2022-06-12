@@ -23,4 +23,9 @@ public class SoloExpertoOpina extends EstadoMuestra{
 				+ muestra.resultado(muestra.filtrarOpinionesExpertas());
 	}
 
+	@Override
+	protected Boolean estaVerificada() {
+		return false;
+	}
+
 }
