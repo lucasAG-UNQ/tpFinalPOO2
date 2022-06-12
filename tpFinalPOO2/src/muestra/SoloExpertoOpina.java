@@ -19,7 +19,8 @@ public class SoloExpertoOpina extends EstadoMuestra{
 	@Override
 	protected String resultadoActual(Muestra muestra) {
 		// TODO Auto-generated method stub
-		return "Solo pueden opinar expertos, estado actual: " + muestra.resultado();
+		return "Solo pueden opinar expertos, estado actual: " 
+				+ muestra.resultado(muestra.filtrarOpinionesExpertas());
 	}
 
 }

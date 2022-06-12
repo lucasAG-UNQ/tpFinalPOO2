@@ -33,7 +33,7 @@ public class Usuario implements UsuarioI{
 	}
 
 	@Override
-	public String opinar(MuestraI muestra) {
+	public String opinar(MuestraI muestra,Opinion opinion) {
 		// TODO Auto-generated method stub
 		return null;
 	}

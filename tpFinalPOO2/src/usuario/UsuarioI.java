@@ -1,11 +1,11 @@
 package usuario;
 
-import muestra.Muestra;
 import muestra.MuestraI;
+import opinion.Opinion;
 
 public interface UsuarioI {
 
-	public String opinar(MuestraI muestra);
+	public String opinar(MuestraI muestra, Opinion opinion);
 	public String enviarMuestra(MuestraI muestra);
 	
 	

@@ -10,8 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import muestra.Muestra;
-import opinion.NoVinchuca;
-import opinion.Vinchuca;
+import opinion.Opinion;
 import ubicacion.UbicacionI;
 import usuario.UsuarioI;
 
@@ -42,13 +41,19 @@ public class MuestraTest {
 		usuarioEspecialistaMarta= mock(UsuarioI.class);
 		ubicacion1= mock(UbicacionI.class);
 		ubicacion2= mock(UbicacionI.class);
-		muestraNoVinchuca= new Muestra(Vinchuca.Gusayana,ubicacion1,usuarioBasicoJuan);
-		muestraVinchuca= new Muestra(Vinchuca.Infestans,ubicacion2,usuarioExpertoMaria);
+		//Como precondicion el usuario opina al momento de enviar la muestra, se simula esto aqui
+		muestraNoVinchuca= new Muestra(Opinion.Gusayana,ubicacion1,usuarioBasicoJuan);
+		muestraNoVinchuca.registrarOpinionNormal(usuarioBasicoJuan, Opinion.Gusayana);
+		
+		muestraVinchuca= new Muestra(Opinion.Infestans,ubicacion2,usuarioExpertoMaria);
+		Opinion opinionExperta= Opinion.Infestans;
+		opinionExperta.setEsExperta();
+		muestraVinchuca.registrarOpinionExperta(usuarioExpertoMaria, opinionExperta);
 	}
 	
 	@Test
 	public void testMuestraSeCreaCorrectamente() {
-		assertEquals(Vinchuca.Infestans,muestraVinchuca.getEspecieFotografiada());
+		assertEquals(Opinion.Infestans,muestraVinchuca.getEspecieFotografiada());
 		assertEquals(ubicacion2,muestraVinchuca.getUbicacion());
 		assertEquals(usuarioExpertoMaria,muestraVinchuca.getFuente());
 		
@@ -56,51 +61,51 @@ public class MuestraTest {
 	
 	@Test
 	public void testResultadoActualDeUnaMuestraRecienEnviadaEsLaEspecieDeLaMuestraEnviada() {
-		assertEquals("Estado actual: Infestans", muestraVinchuca.resultadoActual());
+		assertEquals("Solo pueden opinar expertos, estado actual: Infestans", muestraVinchuca.resultadoActual());
 	}
 	
 	@Test
 	public void testResultadoActualDeUnaMuestraDondeHayUnEmpateDeOpinionesResultaEnNoDefinido() {
-		//TODO No encuentro forma de hacerlo
-		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
-		assertEquals("Estado actual: No Definido", muestraVinchuca.resultadoActual());
+		muestraNoVinchuca.registrarOpinionNormal(usuarioBasicoPepe, Opinion.ChincheFoliada);
+		assertEquals("Estado actual: No Definido", muestraNoVinchuca.resultadoActual());
 	}
 	
 	@Test
 	public void testElUsuarioQueEnviaLaMuestraNoPuedeOpinar(){
-		//TODO
-		
+		String esperado= "Estado actual: "+Opinion.Gusayana.toString();
+		assertEquals(esperado,muestraNoVinchuca.resultadoActual());
+		assertEquals("Usted ya opino en esta muestra",muestraNoVinchuca.registrarOpinionNormal(usuarioBasicoJuan, Opinion.ImagenPocoClara));
+		assertEquals(esperado,muestraNoVinchuca.resultadoActual());
 	}
 	
 	@Test
 	public void testUnUsuarioQueOpinaNoPuedeVolverAOpinar() {
-		//TODO
-		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
-		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
+		muestraNoVinchuca.registrarOpinionNormal(usuarioBasicoPepe, Opinion.ChincheFoliada);
+		muestraNoVinchuca.registrarOpinionNormal(usuarioBasicoPepe, Opinion.ChincheFoliada);
 		
-		assertEquals("Estado actual: No Definido", muestraVinchuca.resultadoActual());
+		assertEquals("Estado actual: No Definido", muestraNoVinchuca.resultadoActual());
 	}
 	
 	@Test
 	public void testCuandoOpinaUnUsuarioExpertoUnUsuarioBasicoYaNoPuedeOpinar() {
-		muestraNoVinchuca.registrarOpinionExperta(usuarioExpertoMaria, Vinchuca.Gusayana);
-		String resultado= muestraNoVinchuca.registrarOpinionNormal(usuarioBasicoPepe, NoVinchuca.ChincheFoliada);
+		muestraNoVinchuca.registrarOpinionExperta(usuarioExpertoMaria, Opinion.Gusayana);
+		String resultado= muestraNoVinchuca.registrarOpinionNormal(usuarioBasicoPepe, Opinion.ChincheFoliada);
 		assertEquals("No puede opinar ya que un experto opino",resultado);
 	}
 	
 	@Test
 	public void testCuandoOpinaUnUsuarioExpertoSoloCuentanVotosDeUsuariosExpertosParaElResultado() {
+		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, Opinion.Infestans);
+		muestraVinchuca.registrarOpinionNormal(usuarioBasicoLeonel, Opinion.Infestans);
 		
+		Opinion opinionExperta=Opinion.Gusayana;
+		opinionExperta.setEsExperta();
+		muestraVinchuca.registrarOpinionExperta(usuarioEspecialistaMarta, opinionExperta);
+		
+		muestraVinchuca.getOpiniones().entrySet().stream().forEach(e->System.out.println(e));
+		
+		assertEquals("Solo pueden opinar expertos, estado actual: No Definido",muestraVinchuca.resultadoActual());
 	}
-	
-	@Test
-	public void testCuandoOpinaUnUsuarioExpertoOtrosUsuariosExpertosPuedenVotar() {
-		muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, Vinchuca.Infestans);
-		muestraVinchuca.registrarOpinionNormal(usuarioBasicoLeonel, Vinchuca.Infestans);
-		muestraVinchuca.registrarOpinionExperta(usuarioExpertoMaria, Vinchuca.Gusayana);
-		assertEquals("Solo pueden opinar expertos, estado actual: " +Vinchuca.Gusayana,muestraVinchuca.resultadoActual());
-	}
-
 	
 
 }

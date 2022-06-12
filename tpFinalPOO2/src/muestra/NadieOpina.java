@@ -17,7 +17,7 @@ public class NadieOpina extends EstadoMuestra {
 
 	@Override
 	protected String resultadoActual(Muestra muestra) {
-		return "Verificada: " + muestra.resultado();
+		return "Verificada: " + muestra.resultado(muestra.filtrarOpinionesExpertas());
 	}
 
 }
