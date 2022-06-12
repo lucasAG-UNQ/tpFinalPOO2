@@ -3,11 +3,11 @@ package usuario;
 import muestra.MuestraI;
 import opinion.Opinion;
 
-public class Especialista extends CategoriaUsuario {
+public class Especialista extends Experto {
 
 	@Override
-	protected String opinar(Usuario usuario, MuestraI muestra, Opinion opinion) {
-		return usuario.opinarDeFormaExperta(muestra, opinion);
+	protected void verificarCategoria(Usuario usuario, Boolean cond) {
+		
 	}
-
+	
 }

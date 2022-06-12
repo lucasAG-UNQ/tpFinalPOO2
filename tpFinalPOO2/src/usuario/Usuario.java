@@ -65,9 +65,25 @@ public class Usuario implements UsuarioI{
 
 	public Boolean cumpleRequisito20Opiniones() {
 		return this.historialOpinion.entrySet().stream()
-				.filter(e->e.getValue().isAfter(LocalDate.now().minusDays(30)))
+				.filter(e->e.getValue().isAfter(LocalDate.now().minusDays(31)))
 				.toList()
-				.size()>20;
+				.size()>=20;
 	}
 
+	
+	/**
+	 * Metodo creado con el fin de testear
+	 * @param opiniones
+	 */
+	public void setHistorialOpinion(HashMap<MuestraI, LocalDate> opiniones) {
+		this.historialOpinion=opiniones;
+	}
+
+	public void verificarCategoria() {
+		Boolean cond= 	this.cumpleRequisito20Opiniones() &&
+						this.sistemaWeb.verificar10MuestrasUsuario(this);
+		
+		this.categoriaUsuario.verificarCategoria(this,cond);
+	}
+	
 }

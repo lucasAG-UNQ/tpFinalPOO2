@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.BooleanSupplier;
 import java.util.stream.Collectors;
 
 import opinion.Opinion;
@@ -196,6 +197,10 @@ public class Muestra implements MuestraI{
 									.collect(Collectors.toMap(e->e.getKey(),e->e.getValue()));
 		
 		return res;
+	}
+
+	public Boolean estaVerificada() {
+		return this.estadoMuestra.estaVerificada();
 	}
 
 

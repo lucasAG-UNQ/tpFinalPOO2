@@ -10,4 +10,12 @@ public class Experto extends CategoriaUsuario{
 		return usuario.opinarDeFormaExperta(muestra,opinion);
 	}
 
+	@Override
+	protected void verificarCategoria(Usuario usuario, Boolean cond) {
+		if(!cond) {
+			usuario.setCategoriaUsuario(new Basico());
+		}
+	}
+
+	
 }
