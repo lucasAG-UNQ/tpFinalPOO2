@@ -87,6 +87,3 @@ class OrganizacionTest {
 }
 
 	
-
-	// TEST NUEVA MUESTRA REGISTRADA
-	// TEST MUESTRA VALIDADA
