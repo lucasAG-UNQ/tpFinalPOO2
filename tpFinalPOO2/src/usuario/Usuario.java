@@ -1,8 +1,8 @@
 package usuario;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 
-import muestra.Muestra;
 import muestra.MuestraI;
 import opinion.Opinion;
 import sistemaWeb.SistemaWeb;
@@ -12,13 +12,13 @@ public class Usuario implements UsuarioI{
 
 	private SistemaWebUsuarioI sistemaWeb;
 	private CategoriaUsuario categoriaUsuario;
-	private HashMap <Muestra,Opinion> historialOpinion;
+	private HashMap <MuestraI,LocalDate> historialOpinion;
 	
 	
 	public Usuario() {
 		this.sistemaWeb= SistemaWeb.getInstance();
 		this.categoriaUsuario= new Basico();
-		this.historialOpinion= new HashMap <Muestra,Opinion> ();
+		this.historialOpinion= new HashMap <MuestraI,LocalDate> ();
 	}
 	
 	public Usuario(CertificadoExternoI certificado) {
@@ -27,22 +27,19 @@ public class Usuario implements UsuarioI{
 	}
 
 
-	private void setCategoriaUsuario(CategoriaUsuario categoria) {
+	protected void setCategoriaUsuario(CategoriaUsuario categoria) {
 		this.categoriaUsuario= categoria;
 		
 	}
 
 	@Override
 	public String opinar(MuestraI muestra,Opinion opinion) {
-		// TODO Auto-generated method stub
-		//Se tiene que delegar al estado usuario para que transforme la opinion en opinion experta
-		return null;
+		return this.categoriaUsuario.opinar(this,muestra,opinion);
 	}
 
 	@Override
 	public String enviarMuestra(MuestraI muestra) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.sistemaWeb.registrarMuestra(muestra);
 	}
 
 	public CategoriaUsuario getCategoriaUsuario() {
@@ -55,6 +52,22 @@ public class Usuario implements UsuarioI{
 
 	public void setSistema(SistemaWebUsuarioI sistema) {
 		this.sistemaWeb=sistema;
+	}
+
+	protected String opinarDeFormaExperta(MuestraI muestra, Opinion opinion) {
+		opinion.setEsExperta();
+		return muestra.registrarOpinionExperta(this, opinion);
+	}
+
+	protected String opinarDeFormaBasica(MuestraI muestra, Opinion opinion) {
+		return muestra.registrarOpinionNormal(this, opinion);
+	}
+
+	public Boolean cumpleRequisito20Opiniones() {
+		return this.historialOpinion.entrySet().stream()
+				.filter(e->e.getValue().isAfter(LocalDate.now().minusDays(30)))
+				.toList()
+				.size()>20;
 	}
 
 }

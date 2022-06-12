@@ -3,10 +3,14 @@ package usuario;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.time.LocalDate;
+import java.util.HashMap;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import muestra.MuestraI;
+import opinion.Opinion;
 import sistemaWeb.SistemaWebUsuarioI;
 
 public class UsuarioTest {
@@ -20,23 +24,36 @@ public class UsuarioTest {
 	Usuario usuarioEspecialistaMarta;
 	CertificadoExternoI certificado;
 	MuestraI muestra1;
+
+	HashMap <MuestraI,LocalDate> opiniones19en30Dias;
+	HashMap <MuestraI,LocalDate> opiniones20en30Dias;
+	HashMap <MuestraI,LocalDate> opiniones20enMasDe30Dias;
 	
 	@BeforeEach
 	public void setUp() {
 		//Se mockea el sistema y se utiliza el mensaje setSistema con el fin de testear sin
 		//dependencia del sistema
+		muestra1= mock(MuestraI.class);
 		certificado= mock (CertificadoExternoI.class);
 		sistema= mock (SistemaWebUsuarioI.class);
 		
 		usuarioBasicoJuan= new Usuario();
 		usuarioBasicoPepe= new Usuario();
 		usuarioBasicoLeonel= new Usuario();
+		
+		usuarioExpertoMaria= new Usuario();
+		usuarioExpertoMaria.setCategoriaUsuario(new Experto());
+		
 		usuarioEspecialistaMarta= new Usuario(certificado);
 		
 		usuarioBasicoJuan.setSistema(sistema);
 		usuarioBasicoPepe.setSistema(sistema);
 		usuarioBasicoLeonel.setSistema(sistema);
+		usuarioExpertoMaria.setSistema(sistema);
 		usuarioEspecialistaMarta.setSistema(sistema);
+		
+		opiniones20en30Dias= new 	HashMap <MuestraI,LocalDate>();
+		
 		
 	}
 	
@@ -67,34 +84,50 @@ public class UsuarioTest {
 	}
 	
 	@Test
+	
 	public void testUnUsuarioBasicoPuedeEnviarUnaMuestraAlSistemaWeb() {
+		usuarioBasicoJuan.enviarMuestra(muestra1);
 		
+		verify(sistema).registrarMuestra(muestra1);
 	}
 	
 	@Test
 	public void testUnUsuarioExpertoPuedeEnviarUnaMuestraAlSistemaWeb() {
+		usuarioExpertoMaria.enviarMuestra(muestra1);
 		
+		verify(sistema).registrarMuestra(muestra1);
 	}
 	
 	@Test
 	public void testUnUsuarioEspecialistaPuedeEnviarUnaMuestraAlSistemaWeb() {
+		usuarioEspecialistaMarta.enviarMuestra(muestra1);
 		
+		verify(sistema).registrarMuestra(muestra1);
 	}
 	
 	
 	@Test
 	public void testUnUsuarioBasicoPuedeEnviarUnaOpinionAUnaMuestra() {
+		Opinion opinion= Opinion.ChincheFoliada;
+		usuarioBasicoJuan.opinar(muestra1,opinion);
 		
+		verify(muestra1).registrarOpinionNormal(usuarioBasicoJuan, opinion);
 	}
 	
 	@Test
 	public void testUnUsuarioExpertoPuedeEnviarUnaOpinionAUnaMuestra() {
+		Opinion opinion= Opinion.ChincheFoliada;
+		usuarioExpertoMaria.opinar(muestra1,opinion);
 		
+		verify(muestra1).registrarOpinionExperta(usuarioExpertoMaria, opinion);
 	}
 	
 	@Test
 	public void testUnUsuarioEspecialistaPuedeEnviarUnaOpinionAUnaMuestra() {
+		Opinion opinion= Opinion.ChincheFoliada;
+		usuarioEspecialistaMarta.opinar(muestra1,opinion);
 		
+		verify(muestra1).registrarOpinionExperta(usuarioEspecialistaMarta, opinion);
 	}
 	
 	@Test
@@ -103,6 +136,7 @@ public class UsuarioTest {
 		
 		usuarioBasicoPepe.setHistorialOpinion(opiniones20en30Dias);
 		
+		assertTrue(usuarioBasicoPepe.cumpleRequisito20Opiniones());
 	}
 
 	@Test
