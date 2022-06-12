@@ -1,6 +1,6 @@
 package muestra;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,7 +17,7 @@ public class Muestra implements MuestraI{
 	private UbicacionI ubicacion;
 	private UsuarioI fuente;
 	private HashMap <UsuarioI,Opinion> opiniones;
-	private Calendar fechaEnvio;
+	private LocalDate fechaEnvio;
 	private EstadoMuestra estadoMuestra;
 	
 	/**
@@ -33,7 +33,7 @@ public class Muestra implements MuestraI{
 		this.ubicacion=ubicacion;
 		this.fuente=usuario;
 		this.opiniones= new HashMap<UsuarioI,Opinion>();
-		this.fechaEnvio= Calendar.getInstance();
+		this.fechaEnvio= LocalDate.now();
 		this.estadoMuestra= new TodosOpinan();
 		
 	}
@@ -66,7 +66,7 @@ public class Muestra implements MuestraI{
 	 * 
 	 * @return Retorna la fecha en la cual se tomo la muestra
 	 */
-	public Calendar getFechaEnvio() {
+	public LocalDate getFechaEnvio() {
 		return fechaEnvio;
 	}
 
@@ -159,11 +159,11 @@ public class Muestra implements MuestraI{
 	}
 
 	/**
-	 * Devuelve el resultado actual de la muestra, o sea la opinion que mas se
+	 * 
+	 * @return Devuelve el resultado actual de la muestra, o sea la opinion que mas se
 	 * envio, en caso de empate retorna "No Definido"
-	 * @return
 	 */
-	public String resultado(Map<UsuarioI, Opinion> map) {
+	protected String resultado(Map<UsuarioI, Opinion> map) {
 		Set<Entry<Opinion, Long>> maxValues=  map.values().stream()//los valores del mapa repetidos
 							.collect(Collectors.groupingBy(e->e, Collectors.counting())) //nuevo mapa con opinion,cantidadDeEsta
 							.entrySet(); //mapa en set de entry(k,v)
@@ -173,8 +173,9 @@ public class Muestra implements MuestraI{
 									.max(Map.Entry.comparingByValue())
 									.get(); //entrada que mas se repite	
 		
-		maxValues.stream()
-					.filter(e->e.getValue()== max.getValue()); //entradas filtradas con el valor que mas se repite
+		maxValues= maxValues.stream()
+					.filter(e->e.getValue()== max.getValue())
+					.collect(Collectors.toSet()); //entradas filtradas con el valor que mas se repite
 		
 		String res="";
 		
@@ -187,6 +188,7 @@ public class Muestra implements MuestraI{
 		return res;
 	}
 
+	
 	protected Map<UsuarioI, Opinion> filtrarOpinionesExpertas() {
 		Map<UsuarioI, Opinion> res =this.opiniones.entrySet()
 									.stream()

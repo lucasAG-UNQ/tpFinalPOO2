@@ -3,6 +3,7 @@ package muestra;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -25,15 +26,15 @@ public class MuestraTest {
 	UsuarioI usuarioBasicoPepe;
 	UsuarioI usuarioBasicoLeonel;
 	UsuarioI usuarioExpertoMaria;
+	UsuarioI usuarioExpertoToto;
 	UsuarioI usuarioEspecialistaMarta;
-	Calendar fechaHoy;
-	Calendar fecha35Dias;
+	LocalDate fechaHoy;
+	LocalDate fecha35Dias;
 	
 	@BeforeEach
 	public void setUp() {
-		fechaHoy= Calendar.getInstance();
-		fecha35Dias= Calendar.getInstance();
-		fecha35Dias.add(Calendar.DAY_OF_MONTH, -35);
+		fechaHoy= LocalDate.now();
+		fecha35Dias= LocalDate.now().minusDays(35);
 		usuarioBasicoJuan= mock(UsuarioI.class);
 		usuarioBasicoPepe= mock(UsuarioI.class);
 		usuarioBasicoLeonel= mock(UsuarioI.class);
@@ -56,7 +57,7 @@ public class MuestraTest {
 		assertEquals(Opinion.Infestans,muestraVinchuca.getEspecieFotografiada());
 		assertEquals(ubicacion2,muestraVinchuca.getUbicacion());
 		assertEquals(usuarioExpertoMaria,muestraVinchuca.getFuente());
-		
+		assertEquals(LocalDate.now(),muestraVinchuca.getFechaEnvio());
 	}
 	
 	@Test
@@ -102,10 +103,30 @@ public class MuestraTest {
 		opinionExperta.setEsExperta();
 		muestraVinchuca.registrarOpinionExperta(usuarioEspecialistaMarta, opinionExperta);
 		
-		muestraVinchuca.getOpiniones().entrySet().stream().forEach(e->System.out.println(e));
-		
 		assertEquals("Solo pueden opinar expertos, estado actual: No Definido",muestraVinchuca.resultadoActual());
 	}
 	
+	@Test
+	public void testCuandoDosUsuariosExpertosCoincidenConSusOpinionesYaNadiePuedeOpinar() {
+		Opinion opinionExperta=Opinion.Infestans;
+		opinionExperta.setEsExperta();
+		muestraVinchuca.registrarOpinionExperta(usuarioEspecialistaMarta, opinionExperta);
+		
+		String resExperto=muestraVinchuca.registrarOpinionExperta(usuarioExpertoToto, opinionExperta);
+		String resBasico= muestraVinchuca.registrarOpinionNormal(usuarioBasicoPepe, Opinion.ImagenPocoClara);
+		
+		assertEquals("No se puede opinar ya que esta muestra esta verificada",resExperto);
+		assertEquals("No se puede opinar ya que esta muestra esta verificada",resBasico);
+	}
 
+	@Test
+	public void testElResultadoDeUnaMuestraVerificadaEsVerificadaYSuResultado() {
+		Opinion opinionExperta=Opinion.Infestans;
+		opinionExperta.setEsExperta();
+		muestraVinchuca.registrarOpinionExperta(usuarioEspecialistaMarta, opinionExperta);
+		
+		assertEquals("Verificada: Infestans", muestraVinchuca.resultadoActual());
+		
+	}
+	
 }
