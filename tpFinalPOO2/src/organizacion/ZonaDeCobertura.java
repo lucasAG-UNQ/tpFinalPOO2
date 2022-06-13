@@ -23,6 +23,10 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 		this.listeners = new ArrayList<IZonaListener>();  
 	}
 	
+	public String getNombre() {
+		return nombre;
+	}
+	
 
 	public double getRadio() {
 	
@@ -35,9 +39,16 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 		
 	}
 	
+	public List<IZonaListener> getListeners(){
+		return listeners;
+	}
 	
-	private void addMuestra(Muestra muestra) {
-		muestras.add(muestra);
+	
+	public void addMuestra(Muestra muestra) {
+		if(this.verificarSiMuestraPerteneceAZona(muestra)) {
+			muestras.add(muestra);
+			this.notificarNuevaMuestra(muestra);
+		}
 	}
 	
 	public List<Muestra> getMuestras(){
@@ -92,7 +103,7 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 		}
 	}
 		
-	private void notificarMuestraValidada(Muestra muestra) {
+	public void notificarMuestraValidada(Muestra muestra) {
 			for(IZonaListener listener : listeners) {
 				listener.muestraValidada(muestra, this);
 			}
