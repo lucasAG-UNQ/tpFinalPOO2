@@ -2,8 +2,17 @@ package organizacion;
 
 import muestra.MuestraI;
 
-public interface IZonaDeCobertura {
-	public void addMuestra(MuestraI muestra);
+import java.util.List;
 
-	public void muestraVerificada(MuestraI muestra);
+import ubicacion.UbicacionI;
+
+public interface IZonaDeCobertura {
+
+	List<MuestraI> getMuestras();
+	double getRadio();
+	UbicacionI getEpicentro();
+	List<ZonaDeCobertura> zonasSolapadas(List<ZonaDeCobertura> zonas);
+	public void addMuestra(MuestraI muestra);
+	void notificarMuestraValidada(MuestraI muestra);
+	
 }

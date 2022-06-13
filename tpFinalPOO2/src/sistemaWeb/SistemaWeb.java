@@ -98,7 +98,7 @@ public class SistemaWeb implements SistemaWebUsuarioI{
 
 	public void muestraVerificada(MuestraI muestra) {
 		this.zonasDeCobertura.stream()
-			.forEach(e->e.muestraVerificada(muestra));
+			.forEach(e->e.notificarMuestraValidada(muestra));
 	}
 
 }

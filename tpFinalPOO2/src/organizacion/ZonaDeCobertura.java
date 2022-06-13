@@ -23,21 +23,23 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 		this.listeners = new ArrayList<IZonaListener>();  
 	}
 	
+	
 	public String getNombre() {
 		return nombre;
 	}
 	
-
+	@Override
 	public double getRadio() {
 	
 		return radio;
 	}
 
-
+	@Override
 	public UbicacionI getEpicentro() {
 		return epicentro;
 		
 	}
+	
 	
 	public List<IZonaListener> getListeners(){
 		return listeners;
@@ -67,14 +69,14 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 		double yMuestra = muestra.getUbicacion().getLongitud();
 		
 		return (Math.sqrt(Math.pow((xZona - xMuestra),2) + Math.pow((yZona - yMuestra),2))<= radio);
-					 
-		
+						
 		
 	}
 	
+	@Override
 	public List<ZonaDeCobertura> zonasSolapadas(List<ZonaDeCobertura>zonas) {
 		
-			
+		
 		List<ZonaDeCobertura> zonasSolapadas = new ArrayList<ZonaDeCobertura>();
 		
 		for(ZonaDeCobertura zona : zonas) {
@@ -90,8 +92,7 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 			
 		
 	}
-
-
+	
 
 	///FUNCIONALIDAD DE OBSERVABLE///
 	
@@ -110,8 +111,10 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 			listener.muestraRegistrada(muestra, this);
 		}
 	}
+
 		
 	public void notificarMuestraValidada(MuestraI muestra) {
+
 		if(this.verificarSiMuestraPerteneceAZona(muestra)) {
 			for(IZonaListener listener : listeners) {
 				listener.muestraValidada(muestra, this);
