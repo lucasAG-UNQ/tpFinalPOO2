@@ -1,26 +1,58 @@
 package busqueda;
 
-public class BusquedaCompleta implements BusquedaI {
+import java.util.List;
+import muestra.Muestra;
 
-	private List<Busqueda> childBusqueda;
+public  class BusquedaCompleta implements BusquedaI {
+
+	private List<BusquedaI> childBusqueda;
+	private BusquedaI busqueda;
+	private boolean logOr;
+	private boolean logAnd;
 	
 	
-	public BusquedaCompleta() {
+	public BusquedaCompleta(List<BusquedaI> childBusqueda,BusquedaI busqueda ) {
+		this.busqueda= busqueda;
+		this.childBusqueda= childBusqueda;
+	}
+	
+			
+	public List<BusquedaI> getChildBusqueda() {
+		return childBusqueda;
+	}
+
+
+	public void setChildBusqueda(List<BusquedaI> childBusqueda) {
+		this.childBusqueda = childBusqueda;
+	}
+
+
+	public BusquedaI getBusqueda() {
+		return busqueda;
+	}
+
+
+	public void setBusqueda(BusquedaI busqueda) {
+		this.busqueda = busqueda;
+	}
+	
+
+	@Override
+	public void buscarMuestra(List<Muestra> muestras ) {
+		
+		
+		//this.childBusqueda.forEach(childBusqueda:: busqueda);
+		
+		
 		
 	}
 	
-		
-	public void buscarMuestra(Muestra muestra) {
-		
-		childBusqueda.forEach (Busqueda::buscarMuestra(Muestra muestra));
-		
-	}
 	
-	public void addBusqueda(Busqueda busqueda) {
+	public void addBusqueda(BusquedaI busqueda) {
 		childBusqueda.add(busqueda);
 	}
 	
-	public void removeBusqueda(Busqueda busqueda) {
+	public void removeBusqueda(BusquedaI busqueda) {
 		childBusqueda.remove(busqueda);
 	}
 }

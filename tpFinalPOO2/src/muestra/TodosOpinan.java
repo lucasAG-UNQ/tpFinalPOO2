@@ -23,7 +23,7 @@ public class TodosOpinan extends EstadoMuestra {
 	}
 
 	@Override
-	protected Boolean estaVerificada() {
+	public Boolean estaVerificada() {
 		return false;
 	}
 
