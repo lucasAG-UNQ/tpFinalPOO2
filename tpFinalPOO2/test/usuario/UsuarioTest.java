@@ -125,8 +125,6 @@ public class UsuarioTest {
 		opiniones20enMasDe30Dias= new 	HashMap <MuestraI,LocalDate>();
 		opiniones20enMasDe30Dias.putAll(opiniones19en30Dias);
 		opiniones20enMasDe30Dias.put(muestra20, fecha35Dias);
-		
-		usuarioExpertoMaria.setHistorialOpinion(opiniones20en30Dias);
 	}
 	
 	

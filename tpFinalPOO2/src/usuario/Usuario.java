@@ -19,6 +19,7 @@ public class Usuario implements UsuarioI{
 		this.sistemaWeb= SistemaWeb.getInstance();
 		this.categoriaUsuario= new Basico();
 		this.historialOpinion= new HashMap <MuestraI,LocalDate> ();
+		sistemaWeb.registrarUsuario(this);
 	}
 	
 	public Usuario(CertificadoExternoI certificado) {
@@ -84,6 +85,6 @@ public class Usuario implements UsuarioI{
 						this.sistemaWeb.verificar10MuestrasUsuario(this);
 		
 		this.categoriaUsuario.verificarCategoria(this,cond);
-	}
+	} 
 	
 }

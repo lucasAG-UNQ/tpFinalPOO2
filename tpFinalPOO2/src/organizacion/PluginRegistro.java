@@ -1,11 +1,11 @@
 package organizacion;
 
-import muestra.Muestra;
+import muestra.MuestraI;
 
 public class PluginRegistro implements IFuncionalidadExterna {
 
 	@Override
-	public void nuevoEvento(Organizacion org, ZonaDeCobertura zona, Muestra muestra) {
+	public void nuevoEvento(Organizacion org, ZonaDeCobertura zona, MuestraI muestra) {
 		// TODO Auto-generated method stub
 
 	}

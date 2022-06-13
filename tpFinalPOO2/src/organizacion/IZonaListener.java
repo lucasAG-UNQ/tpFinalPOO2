@@ -1,11 +1,12 @@
 package organizacion;
 
 import muestra.Muestra;
+import muestra.MuestraI;
 
 public interface IZonaListener {
 	
-	void muestraRegistrada(Muestra m, ZonaDeCobertura z);
+	void muestraRegistrada(MuestraI muestra, ZonaDeCobertura z);
 	
-	void muestraValidada(Muestra m, ZonaDeCobertura z);
+	void muestraValidada(MuestraI m, ZonaDeCobertura z);
 
 }

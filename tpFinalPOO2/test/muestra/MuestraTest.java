@@ -12,12 +12,15 @@ import org.junit.jupiter.api.Test;
 
 import muestra.Muestra;
 import opinion.Opinion;
+import sistemaWeb.SistemaWeb;
 import ubicacion.UbicacionI;
 import usuario.UsuarioI;
 
 
 public class MuestraTest {
 
+	
+	SistemaWeb sistema;
 	Muestra muestraVinchuca;
 	Muestra muestraNoVinchuca;
 	UbicacionI ubicacion1;
@@ -33,8 +36,6 @@ public class MuestraTest {
 	
 	@BeforeEach
 	public void setUp() {
-		fechaHoy= LocalDate.now();
-		fecha35Dias= LocalDate.now().minusDays(35);
 		usuarioBasicoJuan= mock(UsuarioI.class);
 		usuarioBasicoPepe= mock(UsuarioI.class);
 		usuarioBasicoLeonel= mock(UsuarioI.class);
@@ -42,6 +43,7 @@ public class MuestraTest {
 		usuarioEspecialistaMarta= mock(UsuarioI.class);
 		ubicacion1= mock(UbicacionI.class);
 		ubicacion2= mock(UbicacionI.class);
+		sistema= mock(SistemaWeb.class);
 		//Como precondicion el usuario opina al momento de enviar la muestra, se simula esto aqui
 		muestraNoVinchuca= new Muestra(Opinion.Gusayana,ubicacion1,usuarioBasicoJuan);
 		muestraNoVinchuca.registrarOpinionNormal(usuarioBasicoJuan, Opinion.Gusayana);
@@ -50,6 +52,9 @@ public class MuestraTest {
 		Opinion opinionExperta= Opinion.Infestans;
 		opinionExperta.setEsExperta();
 		muestraVinchuca.registrarOpinionExperta(usuarioExpertoMaria, opinionExperta);
+		
+		muestraVinchuca.setSistema(sistema);
+		muestraNoVinchuca.setSistema(sistema);
 	}
 	
 	@Test
@@ -145,6 +150,21 @@ public class MuestraTest {
 		
 		
 		assertTrue(muestraNoVinchuca.estaVerificada()); //Muestra donde no opino experto
+	}
+	
+	@Test
+	public void testUnaMuestraSabeLaDistanciaHastaOtraMuestra() {
+		when(ubicacion1.distanciaHasta(ubicacion2)).thenReturn(10d);
+		assertEquals(10d, muestraNoVinchuca.distanciaHasta(muestraVinchuca));
+	}
+	
+	@Test
+	public void testCuandoUnaMuestraSeVerificaInformaAlSistema() {
+		Opinion opinion= Opinion.Infestans;
+		opinion.setEsExperta();
+		muestraVinchuca.registrarOpinionExperta(usuarioBasicoJuan, opinion);
+		
+		verify(sistema).muestraVerificada(muestraVinchuca);
 	}
 	
 }

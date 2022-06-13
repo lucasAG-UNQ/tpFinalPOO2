@@ -2,7 +2,7 @@ package organizacion;
 
 import java.util.ArrayList;
 import java.util.List;
-import muestra.Muestra;
+import muestra.MuestraI;
 import ubicacion.UbicacionI;
 
 public class ZonaDeCobertura implements IZonaDeCobertura {
@@ -10,7 +10,7 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 	private String nombre;
 	private UbicacionI epicentro;
 	private double radio;
-	private List<Muestra> muestras;	
+	private List<MuestraI> muestras;	
 	private List<IZonaListener> listeners;
 	
 	
@@ -19,7 +19,7 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 		this.nombre = nombre;
 		this.epicentro = epicentro;
 		this.radio = radio;
-		this.muestras = new ArrayList<Muestra>();
+		this.muestras = new ArrayList<MuestraI>();
 		this.listeners = new ArrayList<IZonaListener>();  
 	}
 	
@@ -44,18 +44,22 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 	}
 	
 	
-	public void addMuestra(Muestra muestra) {
+	public void addMuestra(MuestraI muestra) {
 		if(this.verificarSiMuestraPerteneceAZona(muestra)) {
 			muestras.add(muestra);
 			this.notificarNuevaMuestra(muestra);
 		}
 	}
 	
-	public List<Muestra> getMuestras(){
+	public void muestraVerificada(MuestraI muestra) {
+		this.notificarMuestraValidada(muestra);
+	}
+	
+	public List<MuestraI> getMuestras(){
 		return this.muestras;
 	}
 	
-	public boolean verificarSiMuestraPerteneceAZona(Muestra muestra) {
+	public boolean verificarSiMuestraPerteneceAZona(MuestraI muestra) {
 		
 		double xZona = this.epicentro.getLatitud();
 		double yZona = this.epicentro.getLongitud();
@@ -97,13 +101,13 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 		
 	}
 	
-	private void notificarNuevaMuestra(Muestra muestra) {
+	private void notificarNuevaMuestra(MuestraI muestra) {
 		for(IZonaListener listener : listeners) {
 			listener.muestraRegistrada(muestra, this);
 		}
 	}
 		
-	public void notificarMuestraValidada(Muestra muestra) {
+	public void notificarMuestraValidada(MuestraI muestra) {
 			for(IZonaListener listener : listeners) {
 				listener.muestraValidada(muestra, this);
 			}

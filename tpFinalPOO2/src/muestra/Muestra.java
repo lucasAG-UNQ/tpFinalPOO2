@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.function.BooleanSupplier;
 import java.util.stream.Collectors;
 
 import opinion.Opinion;
+import sistemaWeb.SistemaWeb;
 import ubicacion.UbicacionI;
 import usuario.UsuarioI;
 
@@ -20,6 +20,7 @@ public class Muestra implements MuestraI{
 	private HashMap <UsuarioI,Opinion> opiniones;
 	private LocalDate fechaEnvio;
 	private EstadoMuestra estadoMuestra;
+	private SistemaWeb sistema;
 	
 	/**
 	 * 
@@ -36,6 +37,7 @@ public class Muestra implements MuestraI{
 		this.opiniones= new HashMap<UsuarioI,Opinion>();
 		this.fechaEnvio= LocalDate.now();
 		this.estadoMuestra= new TodosOpinan();
+		this.sistema=SistemaWeb.getInstance();
 		
 	}
 
@@ -145,10 +147,12 @@ public class Muestra implements MuestraI{
 		
 		if (this.filtrarOpinionesExpertas().containsValue(opinion)){
 			this.setEstadoMuestra(new NadieOpina());
+			this.sistema.muestraVerificada(this);
 		}
+		String ret= this.usuarioOpino(usuario);
 		this.opiniones.putIfAbsent(usuario, opinion);
 
-		return "Opinion registrada correctamente";
+		return ret;
 	}
 
 	/**
@@ -201,6 +205,15 @@ public class Muestra implements MuestraI{
 
 	public Boolean estaVerificada() {
 		return this.estadoMuestra.estaVerificada();
+	}
+
+	@Override
+	public Double distanciaHasta(MuestraI muestra) {
+		return this.ubicacion.distanciaHasta(muestra.getUbicacion());
+	}
+
+	public void setSistema(SistemaWeb sistema) {
+		this.sistema=sistema;
 	}
 
 

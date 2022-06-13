@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import muestra.Muestra;
+import muestra.MuestraI;
 import ubicacion.UbicacionI;
 
 public class Organizacion implements IOrganizacion, IZonaListener{
@@ -54,13 +54,13 @@ public class Organizacion implements IOrganizacion, IZonaListener{
 
 
 	@Override
-	public void muestraRegistrada(Muestra muestra, ZonaDeCobertura zona) {
+	public void muestraRegistrada(MuestraI muestra, ZonaDeCobertura zona) {
 		this.pluginRegistro.nuevoEvento(this, zona , muestra);
 	}
 
 
 	@Override
-	public void muestraValidada(Muestra muestra, ZonaDeCobertura zona) {
+	public void muestraValidada(MuestraI muestra, ZonaDeCobertura zona) {
 		this.pluginValidacion.nuevoEvento(this, zona, muestra);
 	}
 
