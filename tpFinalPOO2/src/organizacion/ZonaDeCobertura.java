@@ -70,10 +70,14 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 	
 	public List<ZonaDeCobertura> zonasSolapadas(List<ZonaDeCobertura>zonas) {
 		
+			
 		List<ZonaDeCobertura> zonasSolapadas = new ArrayList<ZonaDeCobertura>();
 		
 		for(ZonaDeCobertura zona : zonas) {
-			if(this.getEpicentro().distanciaHasta(zona.getEpicentro()) < this.getRadio()+zona.getRadio()) {
+			
+			double distancia = zona.getEpicentro().distanciaHasta(this.getEpicentro());
+			
+			if(distancia < this.getRadio()+zona.getRadio()) {
 				zonasSolapadas.add(zona);
 			}
 		}
@@ -104,9 +108,11 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 	}
 		
 	public void notificarMuestraValidada(Muestra muestra) {
+		if(this.verificarSiMuestraPerteneceAZona(muestra)) {
 			for(IZonaListener listener : listeners) {
 				listener.muestraValidada(muestra, this);
 			}
+		}
 	}
 		
 
