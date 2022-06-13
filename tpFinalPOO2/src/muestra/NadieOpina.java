@@ -21,7 +21,7 @@ public class NadieOpina extends EstadoMuestra {
 	}
 
 	@Override
-	protected Boolean estaVerificada() {
+	public Boolean estaVerificada() {
 		return true;
 	}
 
