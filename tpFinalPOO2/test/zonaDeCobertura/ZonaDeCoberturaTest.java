@@ -40,8 +40,8 @@ public class ZonaDeCoberturaTest {
 		lujan = mock(UbicacionI.class);
 		lomas = mock(UbicacionI.class);
 		zonaSur=new ZonaDeCobertura("Zona Sur", quilmes,20);
-		zonaSur2=new ZonaDeCobertura("Zona Sur2", lomas,40);
-		zonaNorte=new ZonaDeCobertura("Zona Norte", lujan,2);
+		zonaSur2=new ZonaDeCobertura("Zona Sur2", lomas,20);
+		zonaNorte=new ZonaDeCobertura("Zona Norte", lujan,20);
 		
 		
 	}
@@ -93,21 +93,16 @@ public class ZonaDeCoberturaTest {
 		
 	}
 	
-	//NOFUNCIONA REVISAR METODO DISTANCIAHASTA
 	
-	/*
 	@Test
 	public void testZonasQueSeSolapan() {
-		when(quilmes.getLatitud()).thenReturn(22d);
-		when(quilmes.getLongitud()).thenReturn(44d);
-		when(lomas.getLatitud()).thenReturn(32d);
-		when(lomas.getLongitud()).thenReturn(54d);
-		when(lujan.getLatitud()).thenReturn(229d);
-		when(lujan.getLongitud()).thenReturn(444d);	
 		
+		when(lomas.distanciaHasta(quilmes)).thenReturn(30d);
+		when(lujan.distanciaHasta(quilmes)).thenReturn(100d);
+				
 		assertEquals(Arrays.asList(zonaSur2),zonaSur.zonasSolapadas(Arrays.asList(zonaNorte,zonaSur2)));
 	}
-	*/
+	
 	
 	@Test
 	public void agregarObserver() {

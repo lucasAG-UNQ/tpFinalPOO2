@@ -1,10 +1,22 @@
 package busqueda;
 
-public class Buscador {
+import java.util.List;
 
-	public static Buscador getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+
+import muestra.Muestra;
+
+public class Buscador implements BusquedaI{
+	private List<Muestra> muestras;
+	private BusquedaI busqueda;
+	
+	public Buscador (BusquedaI busqueda, List<Muestra> muestras) {
+		this.muestras=muestras;
+		this.busqueda= busqueda;
+	}
+	
+	@Override
+	public void buscarMuestra(List<Muestra> muestras) {
+		
 	}
 
 }
