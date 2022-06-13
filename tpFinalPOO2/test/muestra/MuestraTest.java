@@ -129,4 +129,22 @@ public class MuestraTest {
 		
 	}
 	
+	@Test
+	public void testUnaMuestraNoVerificadaNoEstaVerificada() {
+		assertFalse(muestraVinchuca.estaVerificada()); //Muestra donde opino experto
+		assertFalse(muestraNoVinchuca.estaVerificada()); //Muestra donde no opino experto
+	}
+	
+	@Test
+	public void testUnaMuestraDondeCoinciden2ExpertosVerificada() {
+		Opinion opinion= Opinion.Infestans;
+		opinion.setEsExperta();
+		
+		muestraNoVinchuca.registrarOpinionExperta(usuarioExpertoMaria, opinion);
+		muestraNoVinchuca.registrarOpinionExperta(usuarioEspecialistaMarta, opinion);
+		
+		
+		assertTrue(muestraNoVinchuca.estaVerificada()); //Muestra donde no opino experto
+	}
+	
 }

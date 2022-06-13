@@ -9,5 +9,12 @@ public class Basico extends CategoriaUsuario {
 	protected String opinar(Usuario usuario, MuestraI muestra, Opinion opinion) {
 		return usuario.opinarDeFormaBasica(muestra,opinion);
 	}
+	
+	@Override
+	protected void verificarCategoria(Usuario usuario, Boolean cond) {
+		if(cond) {
+			usuario.setCategoriaUsuario(new Experto());
+		}
+	}
 
 }
