@@ -29,19 +29,22 @@ public class Organizacion implements IOrganizacion, IZonaListener{
 		
 	}
 	
+	@Override
 	public int getCantDeIntegrantes() {
 		return cantDeIntegrantes;
 	}
 	
-	public String direccionDeOrganizacion() {
-		return "Latitud: "+ this.ubicacion.getLatitud() +"°" + " - " + "Longitud: " + this.ubicacion.getLongitud()+"°";
-	}
-
-    
+	@Override
     public TipoDeOrganizacion getTipoDeOrganizacion() {
     	return tipo;
     	
     }
+    
+	@Override 
+    public String direccionDeOrganizacion() {
+		return "Latitud: "+ this.ubicacion.getLatitud() +"°" + " - " + "Longitud: " + this.ubicacion.getLongitud()+"°";
+	}
+    
 	public void agregarZonaDeInteres(ZonaDeCobertura zona) {
 		zonasDeInteres.add(zona);
 		zona.addListener(this);
