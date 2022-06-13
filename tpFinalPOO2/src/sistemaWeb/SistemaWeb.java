@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import busqueda.Buscador;
+import busqueda.BusquedaI;
 import muestra.Muestra;
 import muestra.MuestraI;
 import organizacion.IZonaDeCobertura;
@@ -99,6 +100,14 @@ public class SistemaWeb implements SistemaWebUsuarioI{
 	public void muestraVerificada(MuestraI muestra) {
 		this.zonasDeCobertura.stream()
 			.forEach(e->e.notificarMuestraValidada(muestra));
+	}
+
+	public void setBuscador(Buscador buscador) {
+		this.buscador=buscador;
+	}
+
+	public ArrayList<MuestraI> buscar(BusquedaI busqueda) {
+		return this.buscador.buscarMuestra(busqueda, muestras);
 	}
 
 }

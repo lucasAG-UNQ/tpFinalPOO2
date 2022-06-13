@@ -11,6 +11,8 @@ import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import busqueda.Buscador;
+import busqueda.BusquedaI;
 import muestra.MuestraI;
 import organizacion.IZonaDeCobertura;
 import organizacion.OrganizacionI;
@@ -56,11 +58,13 @@ public class SistemaWebTest {
 	IZonaDeCobertura zona4;
 	IZonaDeCobertura zona5;
 	
+	BusquedaI busqueda;
+	
+	Buscador buscador;
+	
 	
 	@BeforeEach
 	public void setUp() {
-		//Se mockea el sistema y se utiliza el mensaje setSistema con el fin de testear sin
-		//dependencia del sistema
 		muestra1= mock(MuestraI.class);
 		muestra2= mock(MuestraI.class);
 		muestra3= mock(MuestraI.class);
@@ -107,6 +111,11 @@ public class SistemaWebTest {
 		sistema.registrarZona(zona2);
 		sistema.registrarZona(zona3);
 		sistema.registrarZona(zona4);
+		
+		busqueda=mock(BusquedaI.class);
+		buscador=mock(Buscador.class);
+		
+		sistema.setBuscador(buscador);
 	}
 	
 	@Test
@@ -172,11 +181,23 @@ public class SistemaWebTest {
 	public void testCuandoUnaMuestraEsVerificadaSeLeNotificaALasZonasDeCobertura() {
 		sistema.muestraVerificada(muestra1);
 		
-		verify(zona1).muestraVerificada(muestra1);
-		verify(zona2).muestraVerificada(muestra1);
-		verify(zona3).muestraVerificada(muestra1);
-		verify(zona4).muestraVerificada(muestra1);
-		verify(zona5, never()).muestraVerificada(muestra1);
+		verify(zona1).notificarMuestraValidada(muestra1);
+		verify(zona2).notificarMuestraValidada(muestra1);
+		verify(zona3).notificarMuestraValidada(muestra1);
+		verify(zona4).notificarMuestraValidada(muestra1);
+		verify(zona5, never()).notificarMuestraValidada(muestra1);
+	}
+	
+	@Test
+	public void testCuandoElSistemaPideUnaBusquedaDeMuestrasElBuscadorFiltra() {
+		ArrayList<MuestraI> esperado= new ArrayList<MuestraI>(Arrays.asList(muestra1,
+																			muestra6));
+		
+		when(buscador.buscarMuestra(busqueda, sistema.getMuestras())).thenReturn(esperado);
+		
+		assertTrue(sistema.buscar(busqueda).containsAll(esperado));
+		
+		verify(buscador).buscarMuestra(busqueda,sistema.getMuestras());
 	}
 	
 	
