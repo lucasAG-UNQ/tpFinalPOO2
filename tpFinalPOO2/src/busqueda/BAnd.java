@@ -4,7 +4,7 @@ import java.util.List;
 
 import muestra.Muestra;
 
-public class BAnd extends BusquedaCompleta{
+public class BAnd implements BusquedaCompleta{
 	private BusquedaI busqueda1;
 	private BusquedaI busqueda2;
 	

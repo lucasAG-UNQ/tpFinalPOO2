@@ -3,7 +3,7 @@ package busqueda;
 import java.util.List;
 import muestra.Muestra;
 
-public  class BusquedaCompleta implements BusquedaI {
+public abstract class BusquedaCompleta implements BusquedaI {
 
 	private List<BusquedaI> childBusqueda;
 	private BusquedaI busqueda;
@@ -37,15 +37,8 @@ public  class BusquedaCompleta implements BusquedaI {
 	}
 	
 
-	@Override
-	public void buscarMuestra(List<Muestra> muestras ) {
-		
-		
-		//this.childBusqueda.forEach(childBusqueda:: busqueda);
-		
-		
-		
-	}
+	
+	abastract public void buscarMuestra(List<Muestra> muestras );
 	
 	
 	public void addBusqueda(BusquedaI busqueda) {

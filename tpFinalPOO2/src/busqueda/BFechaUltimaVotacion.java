@@ -10,7 +10,8 @@ import muestra.Muestra;
 public  class BFechaUltimaVotacion implements BusquedaI {
 
 	private List<Muestra> muestras;
-	
+	private LocalDate fechaUltima;
+	private List<Muestra> muestras;
 	
 	/**
 	 * 
@@ -20,8 +21,9 @@ public  class BFechaUltimaVotacion implements BusquedaI {
 	 * @param fecha de votacion de una muestra
 	 * 
 	 */
-	public BFechaUltimaVotacion(List<Muestra> muestras) {
+	public BFechaUltimaVotacion(List<Muestra> muestras, LocalDate fechaUltima) {
 		this.muestras= muestras;
+		this.fechaUltima= fechaUltima;
 		
 		
 	}
