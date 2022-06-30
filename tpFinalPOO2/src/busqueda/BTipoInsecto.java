@@ -3,15 +3,14 @@ package busqueda;
 import java.util.List;
 import java.util.stream.Collectors;
 import muestra.Muestra;
-import opinion.Opinion;
+import muestra.MuestraI;
+import opinion.OpinionI;
 
 
-public  class BTipoInsecto implements BusquedaI {
-	private List<Muestra> muestras;
-	private Opinion tipo;
+public  class BTipoInsecto implements BusquedaI{
+	private OpinionI tipo;
 	
-	public BTipoInsecto(List<Muestra> muestras,Opinion tipo ){
-		this.muestras=muestras;
+	public BTipoInsecto(OpinionI tipo ){
 		this.tipo=tipo;
 	}
 	
@@ -25,27 +24,11 @@ public  class BTipoInsecto implements BusquedaI {
 	 * 
 	 */
 	
-	
-
 	@Override
-	public void buscarMuestra(List<Muestra> muestras ) {
-		this.muestras.stream().filter(m -> m.getEspecieFotografiada().equals(tipo)).collect(Collectors.toList());
+	public List<MuestraI> buscarMuestra(List<MuestraI> muestras ) {
+		return muestras.stream()
+						.filter(m -> m.getEspecieFotografiada().equals(tipo))
+						.toList();
 	}
-
-	public List<Muestra> getMuestras() {
-		return muestras;
-	}
-
-	public void setMuestras(List<Muestra> muestras) {
-		this.muestras = muestras;
-	}
-
-	public Opinion getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(Opinion tipo) {
-		this.tipo = tipo;
-	};
-
+	
 }

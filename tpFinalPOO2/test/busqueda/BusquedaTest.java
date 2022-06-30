@@ -3,21 +3,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import muestra.EstadoMuestra;
 import muestra.Muestra;
+import muestra.MuestraI;
 import opinion.Opinion;
+import opinion.OpinionI;
 import ubicacion.Ubicacion;
 import usuario.UsuarioI;
 
 	public class BusquedaTest {
-		List<Muestra> muestras;
-		Muestra muestra1;
-		Muestra muestra2;
-		Muestra muestra3;
+		List<MuestraI> muestras;
+		MuestraI muestra1;
+		MuestraI muestra2;
+		MuestraI muestra3;
 		Ubicacion ubicacion1;
 		Ubicacion ubicacion2;
 		Ubicacion ubicacion3;
@@ -27,9 +30,9 @@ import usuario.UsuarioI;
 		LocalDate fechaCreacion1;
 		LocalDate fechaCreacion2;
 		LocalDate fechaCreacion3;
-		EstadoMuestra estadoVeri;
-		Opinion tipoInfen;
-		Opinion ningu;
+		String estadoVeri;
+		OpinionI tipoInfen;
+		OpinionI ningu;
 		BFechaCreacion bFechaCre;
 		BFechaUltimaVotacion bFechaUlt;
 		BTipoInsecto bTipo;
@@ -47,16 +50,19 @@ import usuario.UsuarioI;
 			fechaCreacion1= LocalDate.of(2022, 01, 30);
 			fechaCreacion2= LocalDate.of(2022, 03, 30);
 			fechaCreacion3= LocalDate.of(2022, 06, 02);
-			bFechaCre= new BFechaCreacion(muestras , LocalDate.of(2022, 01, 30));
-			bTipo= new BTipoInsecto (muestras,Opinion.Gusayana);
-			bVerificada= new BNivelVerifica (muestras,estadoVeri);
-			bFechaUlt = new BFechaUltimaVotacion(muestras);
+			bFechaCre= new BFechaCreacion(LocalDate.of(2022, 01, 30));
+			bTipo= new BTipoInsecto (Opinion.Gusayana);
+			bVerificada= new BNivelVerifica (estadoVeri);
+			bFechaUlt = new BFechaUltimaVotacion(fechaCreacion3);
 					
 			
 		}
 		@Test
 		public void testPorUltimaFechaCreacion() {
+			List<MuestraI> esperado= new ArrayList<MuestraI>(Arrays.asList	(muestra1
+																			,muestra2));
 			
+			assertEquals(esperado, );
 			
 		} 
 }

@@ -1,6 +1,8 @@
 package opinion;
 
-public enum Opinion {
+import java.time.LocalDate;
+
+public enum Opinion implements OpinionI{
 
 	Infestans,
 	Sordida,
@@ -12,9 +14,11 @@ public enum Opinion {
 	
 	
 	private boolean esOpinionExperta;
+	private LocalDate fechaOpinion;
 
 	Opinion() {
 		this.esOpinionExperta=false;
+		this.fechaOpinion= LocalDate.now();
 	}
 	
 	public Boolean esOpinionExperta() {
@@ -25,4 +29,20 @@ public enum Opinion {
 		this.esOpinionExperta=true;
 	}
 
+	/**
+	 * Mensaje creado con el fin de testear
+	 * @param fecha
+	 */
+	public void setFechaOpinion(LocalDate fecha) {
+		this.fechaOpinion=fecha;
+	}
+
+	/**
+	 * Mensaje creado con el fin de testear
+	 * @return
+	 */
+	public LocalDate getFechaOpinion() {
+		return this.fechaOpinion;
+	}
+	
 }

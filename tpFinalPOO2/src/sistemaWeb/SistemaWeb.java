@@ -36,7 +36,7 @@ public class SistemaWeb implements SistemaWebUsuarioI{
 		return zonasDeCobertura;
 	}
 
-	public SistemaWeb() {
+	private SistemaWeb() {
 		this.usuarios= new ArrayList<UsuarioI>();
 		this.muestras= new ArrayList<MuestraI>();
 		this.organizaciones= new ArrayList<OrganizacionI>();
@@ -106,7 +106,7 @@ public class SistemaWeb implements SistemaWebUsuarioI{
 		this.buscador=buscador;
 	}
 
-	public ArrayList<MuestraI> buscar(BusquedaI busqueda) {
+	public List<MuestraI> buscar(BusquedaI busqueda) {
 		return this.buscador.buscarMuestra(busqueda, muestras);
 	}
 

@@ -1,10 +1,12 @@
 package usuario;
 
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import muestra.MuestraI;
 import opinion.Opinion;
+import opinion.OpinionI;
 import sistemaWeb.SistemaWeb;
 import sistemaWeb.SistemaWebUsuarioI;
 
@@ -12,13 +14,13 @@ public class Usuario implements UsuarioI{
 
 	private SistemaWebUsuarioI sistemaWeb;
 	private CategoriaUsuario categoriaUsuario;
-	private HashMap <MuestraI,LocalDate> historialOpinion;
+	private List<OpinionI> historialOpinion;
 	
 	
 	public Usuario() {
 		this.sistemaWeb= SistemaWeb.getInstance();
 		this.categoriaUsuario= new Basico();
-		this.historialOpinion= new HashMap <MuestraI,LocalDate> ();
+		this.historialOpinion= new ArrayList <OpinionI> ();
 		sistemaWeb.registrarUsuario(this);
 	}
 	
@@ -65,8 +67,8 @@ public class Usuario implements UsuarioI{
 	}
 
 	public Boolean cumpleRequisito20Opiniones() {
-		return this.historialOpinion.entrySet().stream()
-				.filter(e->e.getValue().isAfter(LocalDate.now().minusDays(31)))
+		return this.historialOpinion.stream()
+				.filter(o->o.getFechaOpinion().isAfter(LocalDate.now().minusDays(31)))
 				.toList()
 				.size()>=20;
 	}
@@ -74,10 +76,10 @@ public class Usuario implements UsuarioI{
 	
 	/**
 	 * Metodo creado con el fin de testear
-	 * @param opiniones
+	 * @param opiniones20en30Dias
 	 */
-	public void setHistorialOpinion(HashMap<MuestraI, LocalDate> opiniones) {
-		this.historialOpinion=opiniones;
+	public void setHistorialOpinion(List<OpinionI> opiniones20en30Dias) {
+		this.historialOpinion=opiniones20en30Dias;
 	}
 
 	public void verificarCategoria() {

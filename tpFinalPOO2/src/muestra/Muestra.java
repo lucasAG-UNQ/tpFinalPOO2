@@ -7,17 +7,17 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import opinion.Opinion;
+import opinion.OpinionI;
 import sistemaWeb.SistemaWeb;
 import ubicacion.UbicacionI;
 import usuario.UsuarioI;
 
 public class Muestra implements MuestraI{
 
-	private Opinion especieFotografiada;
+	private OpinionI especieFotografiada;
 	private UbicacionI ubicacion;
 	private UsuarioI fuente;
-	private HashMap <UsuarioI,Opinion> opiniones;
+	private HashMap <UsuarioI,OpinionI> opiniones;
 	private LocalDate fechaEnvio;
 	private EstadoMuestra estadoMuestra;
 	private SistemaWeb sistema;
@@ -30,11 +30,11 @@ public class Muestra implements MuestraI{
 	 * @param ubicacion Una ubicacion que entienda el protocolo de UbicacionI
 	 * @param usuario Un usuario que entienda el protocolo de UsuarioI
 	 */
-	public Muestra(Opinion especie, UbicacionI ubicacion, UsuarioI usuario) {
+	public Muestra(OpinionI especie, UbicacionI ubicacion, UsuarioI usuario) {
 		this.especieFotografiada=especie;
 		this.ubicacion=ubicacion;
 		this.fuente=usuario;
-		this.opiniones= new HashMap<UsuarioI,Opinion>();
+		this.opiniones= new HashMap<UsuarioI,OpinionI>();
 		this.fechaEnvio= LocalDate.now();
 		this.estadoMuestra= new TodosOpinan();
 		this.sistema=SistemaWeb.getInstance();
@@ -45,7 +45,7 @@ public class Muestra implements MuestraI{
 	 *
 	 * @return Retorna la especie fotografiada
 	 */
-	public Opinion getEspecieFotografiada() {
+	public OpinionI getEspecieFotografiada() {
 		return especieFotografiada;
 	}
 
@@ -79,7 +79,7 @@ public class Muestra implements MuestraI{
 	 * 
 	 * @return Retorna la fecha en la cual se tomo la muestra
 	 */
-	public HashMap<UsuarioI, Opinion> getOpiniones() {
+	public HashMap<UsuarioI, OpinionI> getOpiniones() {
 		return opiniones;
 	}
 
@@ -98,7 +98,7 @@ public class Muestra implements MuestraI{
 	 * Registra la opinion, si puede, de un usuario basico
 	 * @return Devuelve un string diciendo si se pudo opinar
 	 */
-	public String registrarOpinionNormal(UsuarioI usuarioBasicoPepe, Opinion opinion) {
+	public String registrarOpinionNormal(UsuarioI usuarioBasicoPepe, OpinionI opinion) {
 		return this.estadoMuestra.registrarOpinionNormal(usuarioBasicoPepe, opinion, this);
 	}
 
@@ -106,7 +106,7 @@ public class Muestra implements MuestraI{
 	 * Registra la opinion, si puede, de un usuario experto
 	 * @return Devuelve un string diciendo si se pudo opinar
 	 */
-	public String registrarOpinionExperta(UsuarioI usuario, Opinion opinion) {
+	public String registrarOpinionExperta(UsuarioI usuario, OpinionI opinion) {
 		return this.estadoMuestra.registrarOpinionExperta(usuario, opinion, this);
 	}
 
@@ -117,7 +117,7 @@ public class Muestra implements MuestraI{
 	 * @param opinion
 	 * @return Avisa que el registro fue exitoso
 	 */
-	protected String vistoBuenoRegistroBasico(UsuarioI usuario, Opinion opinion) {
+	protected String vistoBuenoRegistroBasico(UsuarioI usuario, OpinionI opinion) {
 		String ret= this.usuarioOpino(usuario);
 		this.opiniones.putIfAbsent(usuario, opinion);
 		return ret;
@@ -143,7 +143,7 @@ public class Muestra implements MuestraI{
 	 * @param opinion
 	 * @return Avisa que el registro fue exitoso
 	 */
-	protected String vistoBuenoRegistroExperto(UsuarioI usuario, Opinion opinion) {
+	protected String vistoBuenoRegistroExperto(UsuarioI usuario, OpinionI opinion) {
 		
 		if (this.filtrarOpinionesExpertas().containsValue(opinion)){
 			this.setEstadoMuestra(new NadieOpina());
@@ -168,12 +168,12 @@ public class Muestra implements MuestraI{
 	 * @return Devuelve el resultado actual de la muestra, o sea la opinion que mas se
 	 * envio, en caso de empate retorna "No Definido"
 	 */
-	protected String resultado(Map<UsuarioI, Opinion> map) {
-		Set<Entry<Opinion, Long>> maxValues=  map.values().stream()//los valores del mapa repetidos
+	protected String resultado(Map<UsuarioI, OpinionI> map) {
+		Set<Entry<OpinionI, Long>> maxValues=  map.values().stream()//los valores del mapa repetidos
 							.collect(Collectors.groupingBy(e->e, Collectors.counting())) //nuevo mapa con opinion,cantidadDeEsta
 							.entrySet(); //mapa en set de entry(k,v)
 		
-		Entry<Opinion, Long> max= maxValues
+		Entry<OpinionI, Long> max= maxValues
 									.stream()
 									.max(Map.Entry.comparingByValue())
 									.get(); //entrada que mas se repite	
@@ -194,8 +194,8 @@ public class Muestra implements MuestraI{
 	}
 
 	
-	protected Map<UsuarioI, Opinion> filtrarOpinionesExpertas() {
-		Map<UsuarioI, Opinion> res =this.opiniones.entrySet()
+	protected Map<UsuarioI, OpinionI> filtrarOpinionesExpertas() {
+		Map<UsuarioI, OpinionI> res =this.opiniones.entrySet()
 									.stream()
 									.filter(e->e.getValue().esOpinionExperta())
 									.collect(Collectors.toMap(e->e.getKey(),e->e.getValue()));
@@ -203,6 +203,7 @@ public class Muestra implements MuestraI{
 		return res;
 	}
 
+	@Override
 	public Boolean estaVerificada() {
 		return this.estadoMuestra.estaVerificada();
 	}
@@ -214,6 +215,14 @@ public class Muestra implements MuestraI{
 
 	public void setSistema(SistemaWeb sistema) {
 		this.sistema=sistema;
+	}
+
+	@Override
+	public LocalDate getFechaUltimaOpinion() {
+		return this.opiniones.values().stream()
+										.map(o->o.getFechaOpinion())
+										.max(LocalDate::compareTo)
+										.get();
 	}
 
 

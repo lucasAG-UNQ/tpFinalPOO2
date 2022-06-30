@@ -1,18 +1,18 @@
 package muestra;
 
-import opinion.Opinion;
+import opinion.OpinionI;
 import usuario.UsuarioI;
 
 public class SoloExpertoOpina extends EstadoMuestra{
 
 	@Override
-	protected String registrarOpinionNormal(UsuarioI usuario, Opinion opinion, Muestra muestra) {
+	protected String registrarOpinionNormal(UsuarioI usuario, OpinionI opinion, Muestra muestra) {
 		// TODO Auto-generated method stub
 		return "No puede opinar ya que un experto opino";
 	}
 
 	@Override
-	protected String registrarOpinionExperta(UsuarioI usuario, Opinion opinion, Muestra muestra) {
+	protected String registrarOpinionExperta(UsuarioI usuario, OpinionI opinion, Muestra muestra) {
 		return muestra.vistoBuenoRegistroExperto(usuario,opinion);
 	}
 

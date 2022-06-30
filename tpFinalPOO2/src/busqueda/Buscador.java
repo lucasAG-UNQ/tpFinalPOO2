@@ -9,19 +9,13 @@ import muestra.MuestraI;
 
 public class Buscador{
 	private static Buscador instance;
-	private List<Muestra> muestras;
-	private BusquedaI busqueda;
+	private List<MuestraI> muestras;
 	
 	public Buscador() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public Buscador (BusquedaI busqueda, List<Muestra> muestras) {
-		this.muestras=muestras;
-		this.busqueda= busqueda;
+		this.muestras= new ArrayList<MuestraI>();
 	}
 
-	public ArrayList<MuestraI> buscarMuestra(BusquedaI busqueda,ArrayList<MuestraI> muestras) {
+	public List<MuestraI> buscarMuestra(BusquedaI busqueda,List<MuestraI> muestras) {
 		return busqueda.buscarMuestra(muestras);
 	}
 

@@ -53,10 +53,6 @@ public class ZonaDeCobertura implements IZonaDeCobertura {
 		}
 	}
 	
-	public void muestraVerificada(MuestraI muestra) {
-		this.notificarMuestraValidada(muestra);
-	}
-	
 	public List<MuestraI> getMuestras(){
 		return this.muestras;
 	}

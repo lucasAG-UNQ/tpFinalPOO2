@@ -1,17 +1,17 @@
 package muestra;
 
-import opinion.Opinion;
+import opinion.OpinionI;
 import usuario.UsuarioI;
 
 public class TodosOpinan extends EstadoMuestra {
 
 	@Override
-	protected String registrarOpinionNormal(UsuarioI usuario, Opinion opinion, Muestra muestra) {
+	protected String registrarOpinionNormal(UsuarioI usuario, OpinionI opinion, Muestra muestra) {
 		return muestra.vistoBuenoRegistroBasico(usuario, opinion);
 	}
 
 	@Override
-	protected String registrarOpinionExperta(UsuarioI usuario, Opinion opinion, Muestra muestra) {
+	protected String registrarOpinionExperta(UsuarioI usuario, OpinionI opinion, Muestra muestra) {
 		muestra.setEstadoMuestra(new SoloExpertoOpina());
 		return muestra.vistoBuenoRegistroExperto(usuario, opinion);
 	}

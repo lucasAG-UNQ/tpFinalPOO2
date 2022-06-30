@@ -72,6 +72,11 @@ public class SistemaWebTest {
 		muestra5= mock(MuestraI.class);
 		muestra6= mock(MuestraI.class);
 		muestra7= mock(MuestraI.class);
+		muestra8= mock(MuestraI.class);
+		muestra9= mock(MuestraI.class);
+		muestra10= mock(MuestraI.class);
+		muestra11= mock(MuestraI.class);
+		muestra12= mock(MuestraI.class);
 		muestra20= mock(MuestraI.class);
 		
 		certificado= mock (CertificadoExternoI.class);
@@ -198,6 +203,34 @@ public class SistemaWebTest {
 		assertTrue(sistema.buscar(busqueda).containsAll(esperado));
 		
 		verify(buscador).buscarMuestra(busqueda,sistema.getMuestras());
+	}
+	
+	@Test
+	public void testElSistemaPuedeDecirSiUnUsuarioOpino10Veces() {
+		when(muestra1.getFuente()).thenReturn(usuarioBasicoPepe);
+		when(muestra2.getFuente()).thenReturn(usuarioBasicoPepe);
+		when(muestra3.getFuente()).thenReturn(usuarioBasicoPepe);
+		when(muestra4.getFuente()).thenReturn(usuarioBasicoPepe);
+		when(muestra5.getFuente()).thenReturn(usuarioBasicoPepe);
+		when(muestra6.getFuente()).thenReturn(usuarioBasicoPepe);
+		when(muestra7.getFuente()).thenReturn(usuarioBasicoPepe);
+		when(muestra8.getFuente()).thenReturn(usuarioBasicoPepe);
+		when(muestra9.getFuente()).thenReturn(usuarioBasicoPepe);
+		when(muestra10.getFuente()).thenReturn(usuarioExpertoMaria);
+		when(muestra11.getFuente()).thenReturn(usuarioBasicoPepe);
+		when(muestra12.getFuente()).thenReturn(usuarioBasicoJuan);
+		
+		assertFalse(sistema.verificar10MuestrasUsuario(usuarioBasicoPepe));
+		
+		sistema.registrarMuestra(muestra8);
+		sistema.registrarMuestra(muestra9);
+		sistema.registrarMuestra(muestra10);
+		sistema.registrarMuestra(muestra11);
+		sistema.registrarMuestra(muestra12);
+		
+
+		assertTrue(sistema.verificar10MuestrasUsuario(usuarioBasicoPepe));
+		
 	}
 	
 	

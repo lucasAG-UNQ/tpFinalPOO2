@@ -4,11 +4,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import muestra.Muestra;
+import muestra.MuestraI;
 
 
 public class BFechaCreacion implements BusquedaI {
 	private LocalDate fechaCreacion;
-	private List<Muestra> muestras;
 	
 	/**
 	 * 
@@ -20,27 +20,15 @@ public class BFechaCreacion implements BusquedaI {
 	 */
 	
 	
-	public BFechaCreacion(List<Muestra> muestras , LocalDate fechaCreacion) {
+	public BFechaCreacion(LocalDate fechaCreacion) {
 		this.fechaCreacion= fechaCreacion;
-		this.muestras= muestras;
-			
-	}
-		
-	public LocalDate getFechaCreacion() {
-		return fechaCreacion;
-	}
-    
-
-	public void setFechaCreacion(LocalDate fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
 	}
 	
-	
-
 	@Override
-	public void buscarMuestra(List<Muestra> muestras) {
-		
-	    this.muestras.stream().filter(m -> m.getFechaEnvio().equals(fechaCreacion)).collect(Collectors.toList());
+	public List<MuestraI> buscarMuestra(List<MuestraI> muestras) {
+	    return muestras.stream()
+	    				.filter(m -> m.getFechaEnvio().equals(fechaCreacion))
+	    				.toList();
 		
 	}
 }

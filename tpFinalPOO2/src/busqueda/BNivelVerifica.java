@@ -1,14 +1,11 @@
 package busqueda;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import muestra.EstadoMuestra;
-import muestra.Muestra;
+import muestra.MuestraI;
 
 public  class BNivelVerifica implements BusquedaI {
-	
-	private List<Muestra> muestras;
-	private EstadoMuestra estado;
+	private String estado;
 	
 	/**
 	 * 
@@ -19,31 +16,8 @@ public  class BNivelVerifica implements BusquedaI {
 	 * 
 	 */
 	
-	public BNivelVerifica(List<Muestra> muestras,EstadoMuestra estado) {
-		
-		this.muestras= muestras;
+	public BNivelVerifica(String estado) {
 		this.estado= estado;
-	}
-	
-	
-	public List<Muestra> getMuestras() {
-		return muestras;
-	}
-
-
-	public void setMuestras(List<Muestra> muestras) {
-		this.muestras = muestras;
-	}
-	
-	
-
-	public EstadoMuestra getEstado() {
-		return estado;
-	}
-
-
-	public void setEstado(EstadoMuestra estado) {
-		this.estado = estado;
 	}
 	
 	/**
@@ -55,14 +29,11 @@ public  class BNivelVerifica implements BusquedaI {
 	 */
 
 	@Override
-	public void buscarMuestra(List<Muestra> muestras ) {
+	public List<MuestraI> buscarMuestra(List<MuestraI> muestras ) {
+		boolean compare= this.estado=="verificado";
 		
-		if (estado.estaVerificada())
-			this.muestras.stream().filter(m -> m.getEstadoMuestra().estaVerificada().equals(true)).collect(Collectors.toList());
-		else
-			this.muestras.stream().collect(Collectors.toList());
-			
-	
-	};
-
+		return muestras.stream()
+						.filter(m->m.estaVerificada()==compare)
+						.toList();
+	}
 }

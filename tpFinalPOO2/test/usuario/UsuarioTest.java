@@ -4,12 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import muestra.MuestraI;
+import opinion.OpinionI;
 import opinion.Opinion;
 import sistemaWeb.SistemaWebUsuarioI;
 
@@ -24,60 +26,34 @@ public class UsuarioTest {
 	Usuario usuarioEspecialistaMarta;
 	CertificadoExternoI certificado;
 	MuestraI muestra1;
-	MuestraI muestra2;
-	MuestraI muestra3;
-	MuestraI muestra4;
-	MuestraI muestra5;
-	MuestraI muestra6;
-	MuestraI muestra7;
-	MuestraI muestra8;
-	MuestraI muestra9;
-	MuestraI muestra10;
-	MuestraI muestra11;
-	MuestraI muestra12;
-	MuestraI muestra13;
-	MuestraI muestra14;
-	MuestraI muestra15;
-	MuestraI muestra16;
-	MuestraI muestra17;
-	MuestraI muestra18;
-	MuestraI muestra19;
 	MuestraI muestra20;
+	OpinionI opinion1;
+	OpinionI opinionHoy;
+	OpinionI opinionHace35Dias;
 
 	LocalDate fechaHoy;
 	LocalDate fecha35Dias;
 
-	HashMap <MuestraI,LocalDate> opiniones19en30Dias;
-	HashMap <MuestraI,LocalDate> opiniones20en30Dias;
-	HashMap <MuestraI,LocalDate> opiniones20enMasDe30Dias;
+	List <OpinionI> opiniones19en30Dias;
+	List <OpinionI> opiniones20en30Dias;
+	List <OpinionI> opiniones20enMasDe30Dias;
 	
 	@BeforeEach
 	public void setUp() {
 		//Se mockea el sistema y se utiliza el mensaje setSistema con el fin de testear sin
 		//dependencia del sistema
 		muestra1= mock(MuestraI.class);
-		muestra2= mock(MuestraI.class);
-		muestra3= mock(MuestraI.class);
-		muestra4= mock(MuestraI.class);
-		muestra5= mock(MuestraI.class);
-		muestra6= mock(MuestraI.class);
-		muestra7= mock(MuestraI.class);
-		muestra8= mock(MuestraI.class);
-		muestra9= mock(MuestraI.class);
-		muestra10= mock(MuestraI.class);
-		muestra11= mock(MuestraI.class);
-		muestra12= mock(MuestraI.class);
-		muestra13= mock(MuestraI.class);
-		muestra14= mock(MuestraI.class);
-		muestra15= mock(MuestraI.class);
-		muestra16= mock(MuestraI.class);
-		muestra17= mock(MuestraI.class);
-		muestra18= mock(MuestraI.class);
-		muestra19= mock(MuestraI.class);
 		muestra20= mock(MuestraI.class);
-	
+
 		fechaHoy= LocalDate.now();
 		fecha35Dias= LocalDate.now().minusDays(35);
+		
+		
+		opinionHoy= mock(OpinionI.class);
+		when(opinionHoy.getFechaOpinion()).thenReturn(fechaHoy);
+		opinionHace35Dias= mock(OpinionI.class);
+		when(opinionHace35Dias.getFechaOpinion()).thenReturn(fecha35Dias);
+		
 		
 		certificado= mock (CertificadoExternoI.class);
 		sistema= mock (SistemaWebUsuarioI.class);
@@ -97,34 +73,34 @@ public class UsuarioTest {
 		usuarioExpertoMaria.setSistema(sistema);
 		usuarioEspecialistaMarta.setSistema(sistema);
 		
-		opiniones19en30Dias= new 	HashMap <MuestraI,LocalDate>();
-		opiniones19en30Dias.put(muestra1, fechaHoy);
-		opiniones19en30Dias.put(muestra2, fechaHoy);
-		opiniones19en30Dias.put(muestra3, fechaHoy);
-		opiniones19en30Dias.put(muestra4, fechaHoy);
-		opiniones19en30Dias.put(muestra5, fechaHoy);
-		opiniones19en30Dias.put(muestra6, fechaHoy);
-		opiniones19en30Dias.put(muestra7, fechaHoy);
-		opiniones19en30Dias.put(muestra8, fechaHoy);
-		opiniones19en30Dias.put(muestra9, fechaHoy);
-		opiniones19en30Dias.put(muestra10, fechaHoy);
-		opiniones19en30Dias.put(muestra11, fechaHoy);
-		opiniones19en30Dias.put(muestra12, fechaHoy);
-		opiniones19en30Dias.put(muestra13, fechaHoy);
-		opiniones19en30Dias.put(muestra14, fechaHoy);
-		opiniones19en30Dias.put(muestra15, fechaHoy);
-		opiniones19en30Dias.put(muestra16, fechaHoy);
-		opiniones19en30Dias.put(muestra17, fechaHoy);
-		opiniones19en30Dias.put(muestra18, fechaHoy);
-		opiniones19en30Dias.put(muestra19, fechaHoy);
+		opiniones19en30Dias= new ArrayList <OpinionI>();
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
+		opiniones19en30Dias.add(opinionHoy);
 		
-		opiniones20en30Dias= new 	HashMap <MuestraI,LocalDate>();
-		opiniones20en30Dias.putAll(opiniones19en30Dias);
-		opiniones20en30Dias.put(muestra20, fechaHoy);
+		opiniones20en30Dias= new ArrayList <OpinionI>();
+		opiniones20en30Dias.addAll(opiniones19en30Dias);
+		opiniones20en30Dias.add(opinionHoy);
 		
-		opiniones20enMasDe30Dias= new 	HashMap <MuestraI,LocalDate>();
-		opiniones20enMasDe30Dias.putAll(opiniones19en30Dias);
-		opiniones20enMasDe30Dias.put(muestra20, fecha35Dias);
+		opiniones20enMasDe30Dias= new ArrayList <OpinionI>();
+		opiniones20enMasDe30Dias.addAll(opiniones19en30Dias);
+		opiniones20enMasDe30Dias.add(opinionHace35Dias);
 	}
 	
 	
@@ -212,7 +188,7 @@ public class UsuarioTest {
 	@Test
 	public void testUnUsuarioBasicoQueOpina20VecesEnMasDe30DiasNoCumpleElRequisitoParaSerExperto() {
 		usuarioBasicoPepe.setHistorialOpinion(opiniones20enMasDe30Dias);
-
+		
 		assertFalse(usuarioBasicoPepe.cumpleRequisito20Opiniones());
 	}
 	

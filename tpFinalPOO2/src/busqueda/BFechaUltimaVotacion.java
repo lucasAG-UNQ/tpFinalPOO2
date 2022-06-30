@@ -4,14 +4,13 @@ package busqueda;
 import java.time.LocalDate;
 import java.util.List;
 import muestra.Muestra;
+import muestra.MuestraI;
 
 
 
 public  class BFechaUltimaVotacion implements BusquedaI {
 
-	private List<Muestra> muestras;
 	private LocalDate fechaUltima;
-	private List<Muestra> muestras;
 	
 	/**
 	 * 
@@ -21,29 +20,17 @@ public  class BFechaUltimaVotacion implements BusquedaI {
 	 * @param fecha de votacion de una muestra
 	 * 
 	 */
-	public BFechaUltimaVotacion(List<Muestra> muestras, LocalDate fechaUltima) {
-		this.muestras= muestras;
+	public BFechaUltimaVotacion(LocalDate fechaUltima) {
 		this.fechaUltima= fechaUltima;
 		
 		
 	}
 	
-	public List<Muestra> getMuestras() {
-		return muestras;
-	}
-
-    
-	public void setMuestras(List<Muestra> muestras) {
-		this.muestras = muestras;
-	}
-
-	
-
 	@Override
-	public void buscarMuestra(List<Muestra> muestras ) {
-		this.muestras.stream().map(m -> m.getFechaEnvio()).max(LocalDate :: compareTo).get(); 
-				
+	public List<MuestraI> buscarMuestra(List<MuestraI> muestras ) {
+		return muestras.stream()
+						.filter(m->m.getFechaUltimaOpinion().isAfter(this.fechaUltima))
+						.toList();
 
-
-		};
+	}
 }
