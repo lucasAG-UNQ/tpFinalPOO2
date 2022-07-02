@@ -1,5 +1,6 @@
 package busqueda;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import muestra.MuestraI;
@@ -15,8 +16,12 @@ public class BOr implements BusquedaI{
 	}
 	@Override
 	public List<MuestraI> buscarMuestra(List<MuestraI> muestras ) {
-		List<MuestraI>res= busqueda1.buscarMuestra(muestras);
-		res.addAll(busqueda2.buscarMuestra(muestras));
+		//se copian los resultados de las busquedas debido a una excepcion
+		
+		List<MuestraI>res= new ArrayList<MuestraI> (busqueda1.buscarMuestra(muestras));
+		List<MuestraI>res2= new ArrayList<MuestraI> (busqueda2.buscarMuestra(muestras));
+		
+		res.addAll(res2);
 		return res;
 	}
 	

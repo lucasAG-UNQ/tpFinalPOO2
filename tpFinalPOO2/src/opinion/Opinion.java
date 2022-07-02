@@ -31,14 +31,6 @@ public enum Opinion implements OpinionI{
 
 	/**
 	 * Mensaje creado con el fin de testear
-	 * @param fecha
-	 */
-	public void setFechaOpinion(LocalDate fecha) {
-		this.fechaOpinion=fecha;
-	}
-
-	/**
-	 * Mensaje creado con el fin de testear
 	 * @return
 	 */
 	public LocalDate getFechaOpinion() {
